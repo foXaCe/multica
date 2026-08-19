@@ -600,8 +600,35 @@ function uncostedTokens(usage: Priceable): {
 // either side of a CLI upgrade). Custom pricing overrides still apply — but
 // only to the estimated half, since they are a user's guess at a rate and the
 // authoritative half is not a guess.
+// ── CORRECTIF LOCAL, PAS D'AMONT — voir multica-ai/multica#7232.
+//
+// Cette installation authentifie TOUS ses runtimes par abonnement forfaitaire
+// (Claude, SuperGrok, opencode-go). Le cout marginal d'une tache y est nul
+// jusqu'a la limite de fenetre, puis la tache ne part plus : une marche
+// d'escalier, qu'une estimation lineaire jetons x tarif ne peut pas decrire.
+//
+// Mesure du 2026-08-19 : sur 296 lignes de `task_usage`, ZERO ne portait de
+// `cost_usd_ticks`. Tout le montant affiche venait donc de MODEL_PRICING,
+// c'est-a-dire des tarifs API publics — que l'operateur ne paie pas.
+//
+// Quand ce drapeau est leve, on ne garde que la moitie FAISANT AUTORITE, celle
+// que le fournisseur a chiffree lui-meme (xAI le fait, en ticks de 1e-10 USD).
+// Elle, c'est une vraie facture ; l'autre moitie est une supposition.
+//
+// C'est un DRAPEAU et non une suppression, pour une raison precise : les 41
+// tests de `utils.test.ts` verifient l'estimation d'amont. Les supprimer
+// rendrait la porte verte en cessant de mesurer. Le drapeau est absent sous
+// vitest, donc la suite d'amont continue de tourner telle quelle et garde tout
+// son sens ; seule l'image construite pour le LXC 124 le leve.
+//
+// A RETIRER le jour ou l'amont expose un mode de facturation par runtime.
+const COUT_ESTIME_MASQUE =
+  process.env.NEXT_PUBLIC_MULTICA_MASQUER_COUT_ESTIME === "1";
+
+
 export function estimateCost(usage: Priceable): number {
   const authoritative = (usage.cost_usd_ticks ?? 0) / COST_USD_TICKS_PER_USD;
+  if (COUT_ESTIME_MASQUE) return authoritative;
   const pricing = resolvePricing(usage.model, usage.provider);
   if (!pricing) return authoritative;
   const uncosted = uncostedTokens(usage);
@@ -629,6 +656,14 @@ export interface CostBreakdown {
 // this way keeps the stacked chart summing to the headline figure instead of
 // silently under-drawing every Grok row.
 export function estimateCostBreakdown(usage: Priceable): CostBreakdown {
+  if (COUT_ESTIME_MASQUE) {
+    return {
+      input: (usage.cost_usd_ticks ?? 0) / COST_USD_TICKS_PER_USD,
+      output: 0,
+      cacheRead: 0,
+      cacheWrite: 0,
+    };
+  }
   const pricing = resolvePricing(usage.model, usage.provider);
   if (!pricing) {
     // No rates to split by, but the provider may still have priced the turn
