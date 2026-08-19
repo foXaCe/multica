@@ -44,6 +44,16 @@ RUN pnpm install --frozen-lockfile --offline
 
 ARG NEXT_PUBLIC_APP_VERSION=dev
 ENV NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION
+
+# CORRECTIF LOCAL — voir multica-ai/multica#7232 et packages/views/runtimes/utils.ts.
+# Sans cet ARG, `docker build --build-arg NEXT_PUBLIC_MULTICA_MASQUER_COUT_ESTIME=1`
+# est ACCEPTE SANS ERREUR et silencieusement ignore : Next n'inline que les
+# variables presentes dans l'environnement du build. Mesure du 2026-08-19 : une
+# image construite sans cette ligne se deploie, l'identifiant d'image change, et
+# le comportement ne change pas d'un pouce.
+ARG NEXT_PUBLIC_MULTICA_MASQUER_COUT_ESTIME=0
+ENV NEXT_PUBLIC_MULTICA_MASQUER_COUT_ESTIME=$NEXT_PUBLIC_MULTICA_MASQUER_COUT_ESTIME
+
 ENV STANDALONE=true
 
 # Build the web app (standalone output for minimal runtime)
