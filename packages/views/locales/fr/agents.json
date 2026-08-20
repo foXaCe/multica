@@ -872,7 +872,9 @@
     "tool_kind_command": "Commandes",
     "tool_kind_write": "Modifications",
     "tool_kind_read": "Lectures",
-    "tool_kind_misc": "Autres"
+    "tool_kind_misc": "Autres",
+    "details_project_directory": "Dossier du projet",
+    "copy_project_directory": "Copier le dossier du projet"
   },
   "task_failure": {
     "agent_error": "Erreur d'exécution de l'agent",

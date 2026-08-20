@@ -359,7 +359,9 @@
     "link_copy_failed": "Échec de la copie du lien",
     "workdir_path_copied": "Chemin du répertoire de travail copié",
     "workdir_path_copy_failed": "Échec de la copie du chemin du répertoire de travail",
-    "workdir_path_unavailable": "Aucun répertoire de travail local — ce ticket n'a pas encore été traité par un agent local"
+    "workdir_path_unavailable": "Aucun répertoire de travail local — ce ticket n'a pas encore été traité par un agent local",
+    "project_directory_path_copied": "Chemin du dossier du projet copié",
+    "project_directory_path_copied_with_branch": "Chemin du dossier du projet copié — le travail est sur {{branch}}"
   },
   "timeline": {
     "loading": "Chargement..."
@@ -637,7 +639,8 @@
     "remove_parent_issue": "Retirer le ticket parent",
     "remove_parent_issue_success": "Ticket parent retiré",
     "add_sub_issue": "Ajouter un sous-ticket...",
-    "delete_issue": "Supprimer le ticket"
+    "delete_issue": "Supprimer le ticket",
+    "copy_project_directory_path": "Copier le chemin du dossier du projet"
   },
   "pickers": {
     "custom_property": {
@@ -804,6 +807,11 @@
   "plugins": {
     "panels": "Plugins",
     "surface_failed": "{{name}} n'a pas pu charger son interface.",
-    "surface_local_only": "{{name}} a été installé depuis une source locale, son interface ne peut donc pas être chargée dans le navigateur."
+    "surface_local_only": "{{name}} a été installé depuis une source locale, son interface ne peut donc pas être chargée dans le navigateur.",
+    "hook_succeeded": "{{name}} a terminé.",
+    "hook_failed": "{{name}} a échoué.",
+    "hook_refused": "{{name}} n'a pas été exécuté.",
+    "hook_activity": "Appels récents",
+    "hook_never_run": "Ce hook n'a encore jamais été exécuté."
   }
 }

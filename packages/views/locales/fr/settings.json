@@ -341,6 +341,18 @@
       "storage_workspace": "Stocker des données partagées par l'espace de travail",
       "net": "Envoyer des données vers {{domain}}",
       "unknown": "Accès non reconnu — ne pas installer"
+    },
+    "hook_circuit_open": "La distribution des hooks est arrêtée après des échecs répétés.",
+    "hook_recent_failures": "{{count}} appels de hook récents ont échoué.",
+    "mcp": {
+      "badge": "MCP",
+      "description": "Ce hook adopte des outils venant du serveur MCP de l'auteur du plugin. Approuvez ceux que les agents peuvent appeler — un outil qui apparaîtrait plus tard n'est pas adopté tant que vous ne l'avez pas approuvé.",
+      "loading": "Chargement des outils",
+      "unreachable": "Le serveur MCP du plugin est injoignable.",
+      "empty": "Ce serveur MCP ne propose aucun outil pour l'instant.",
+      "drifted": "Schéma modifié",
+      "save": "Enregistrer les approbations",
+      "approved": "Outils approuvés mis à jour."
     }
   },
   "properties": {
@@ -1084,7 +1096,6 @@
     "show_archived": "Afficher les archivés ({{count}})",
     "archived_badge": "Archivé",
     "archived_hint": "Retiré des nouvelles affectations. Les tickets qui le portent le gardent.",
-    "built_in_locked": "État intégré. Le nom, la couleur et la catégorie sont figés.",
     "flag_off": "Les états personnalisés ne sont pas encore activés sur cette installation. Les états intégrés ci-dessous fonctionnent normalement.",
     "reorder_failed": "Le nouvel ordre n'a pas pu être enregistré.",
     "actions": {
@@ -1107,7 +1118,8 @@
       "cancel": "Annuler",
       "save": "Enregistrer",
       "saving": "Enregistrement…",
-      "save_failed": "L'état n'a pas pu être enregistré."
+      "save_failed": "L'état n'a pas pu être enregistré.",
+      "key_hint": "Désigné par {{key}} dans l'API et la CLI."
     },
     "archive_dialog": {
       "title": "Archiver cet état ?",
@@ -1125,5 +1137,46 @@
       "blocked": "À l'arrêt, en attente d'une dépendance extérieure.",
       "cancelled": "Abandonné."
     }
+  },
+  "telegram": {
+    "section_title": "Telegram",
+    "page_description": "Connectez chaque agent Multica à son propre bot Telegram. Les membres peuvent écrire au bot en privé, le mentionner dans un groupe, taper /issue pour ouvrir un ticket Multica, et suivre la réponse de l'agent en direct.",
+    "not_enabled_title": "Intégration Telegram non activée",
+    "not_enabled_description_prefix": "Définissez",
+    "not_enabled_description_suffix": "sur le serveur pour autoriser l'installation de bots Telegram.",
+    "not_enabled_self_host_hint": "Auto-hébergement : voir le README du projet pour le détail.",
+    "preview_title": "Installation Telegram bientôt disponible",
+    "preview_description": "La clé de chiffrement au repos est définie, mais les installations ne sont pas encore disponibles sur cette installation. Le bouton Connecter apparaîtra ici dès qu'elles le seront.",
+    "connected_bots": "Bots connectés",
+    "loading": "Chargement…",
+    "load_failed": "Impossible de charger les installations Telegram",
+    "empty_title": "Aucun bot connecté pour l'instant",
+    "empty_description_prefix": "Ouvrez un agent de cet espace de travail et cliquez sur",
+    "empty_description_cta": "Connecter Telegram",
+    "empty_description_suffix": "pour lui installer un bot.",
+    "revoked_badge": "révoqué",
+    "installed_at_label": "Installé {{when}}",
+    "disconnect": "Déconnecter",
+    "disconnecting": "Déconnexion…",
+    "disconnect_confirm_title": "Déconnecter ce bot Telegram ?",
+    "disconnect_confirm_description": "Le bot cessera de recevoir les messages Telegram de cet espace de travail. L'historique des conversations dans Multica est conservé ; vous pourrez le reconnecter plus tard depuis le même agent.",
+    "disconnect_confirm_cancel": "Annuler",
+    "toast_disconnected": "Bot Telegram déconnecté",
+    "toast_disconnect_failed": "La déconnexion a échoué",
+    "bind_button": "Connecter Telegram",
+    "bind_button_title": "Connecter {{agent}} à un bot Telegram",
+    "agent_bot_connected_label": "Connecté à Telegram",
+    "agent_bot_disconnect_tooltip": "Dissocier ce bot Telegram de l'agent. Le bot cessera de recevoir les messages Telegram.",
+    "agent_bot_manage_link": "Ouvrir dans Telegram",
+    "agent_bot_manage_tooltip": "Ouvrir une conversation avec ce bot dans Telegram.",
+    "connect_dialog_title": "Connecter un bot Telegram",
+    "connect_dialog_description": "Créez un bot avec @BotFather dans Telegram, puis collez son jeton ci-dessous. Le jeton est vérifié en direct et stocké chiffré.",
+    "connect_docs_link": "Pas à pas : connecter votre agent Multica à Telegram",
+    "bot_token_label": "Jeton du bot",
+    "connect_submit": "Connecter",
+    "connect_submitting": "Connexion…",
+    "connect_cancel": "Annuler",
+    "connect_success_toast": "Bot Telegram connecté",
+    "connect_failed_toast": "Impossible de connecter le bot Telegram"
   }
 }

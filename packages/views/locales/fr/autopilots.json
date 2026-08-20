@@ -324,7 +324,9 @@
         "label": "Exécution seule",
         "description": "Exécution silencieuse, aucun ticket créé"
       }
-    }
+    },
+    "event_filter_add": "Ajouter",
+    "event_filter_remove_label": "Retirer le filtre"
   },
   "schedule_editor": {
     "time_label": "Heure",
