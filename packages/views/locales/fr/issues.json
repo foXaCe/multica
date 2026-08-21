@@ -1,4 +1,19 @@
 {
+  "status_catalog_error": {
+    "title": "Impossible de charger la liste des états",
+    "hint": "Les tickets restent masqués tant qu'elle n'est pas chargée, car un filtre par état ne peut pas s'appliquer sans elle.",
+    "retry": "Réessayer"
+  },
+  "revision": {
+    "conflict": "Le ticket ou le commentaire a changé. La dernière version a été rechargée ; comparez-les avant d'enregistrer à nouveau.",
+    "compare_title": "Le titre a été modifié en parallèle. Comparez les deux versions.",
+    "compare_description": "La description a été modifiée en parallèle. Comparez les deux versions.",
+    "compare_comment": "Le commentaire a été modifié en parallèle. Comparez les deux versions.",
+    "server_version": "Dernière version du serveur",
+    "local_version": "Votre version locale",
+    "keep_local": "Garder ma version",
+    "use_server": "Utiliser la dernière version"
+  },
   "page": {
     "breadcrumb_title": "Tickets",
     "breadcrumb_workspace_fallback": "Espace de travail",
@@ -37,6 +52,7 @@
   "filters": {
     "tooltip": "Filtrer",
     "placeholder": "Filtrer...",
+    "search_status": "Rechercher un état...",
     "no_results": "Aucun résultat",
     "no_labels": "Aucune étiquette pour l'instant",
     "no_assignee": "Aucun assigné",
@@ -72,8 +88,7 @@
     "active_count_other": "{{count}} filtres",
     "in_view": "Déjà dans cette vue",
     "chip_edit": "Modifier",
-    "chip_save_as": "Enregistrer sous",
-    "search_status": "Rechercher un état..."
+    "chip_save_as": "Enregistrer sous"
   },
   "display": {
     "tooltip": "Paramètres d'affichage",
@@ -358,10 +373,10 @@
     "link_copied": "Lien copié",
     "link_copy_failed": "Échec de la copie du lien",
     "workdir_path_copied": "Chemin du répertoire de travail copié",
-    "workdir_path_copy_failed": "Échec de la copie du chemin du répertoire de travail",
-    "workdir_path_unavailable": "Aucun répertoire de travail local — ce ticket n'a pas encore été traité par un agent local",
     "project_directory_path_copied": "Chemin du dossier du projet copié",
-    "project_directory_path_copied_with_branch": "Chemin du dossier du projet copié — le travail est sur {{branch}}"
+    "project_directory_path_copied_with_branch": "Chemin du dossier du projet copié — le travail est sur {{branch}}",
+    "workdir_path_copy_failed": "Échec de la copie du chemin du répertoire de travail",
+    "workdir_path_unavailable": "Aucun répertoire de travail local — ce ticket n'a pas encore été traité par un agent local"
   },
   "timeline": {
     "loading": "Chargement..."
@@ -611,7 +626,9 @@
   },
   "card": {
     "update_failed": "Échec de la mise à jour du ticket",
-    "updated_ago": "Mis à jour {{time}}"
+    "updated_ago": "Mis à jour {{time}}",
+    "child_progress_restricted_one": "{{count}} restreint",
+    "child_progress_restricted_other": "{{count}} restreints"
   },
   "actions": {
     "status": "Statut",
@@ -633,14 +650,14 @@
     "unpin_from_sidebar": "Détacher de la barre latérale",
     "copy_link": "Copier le lien",
     "copy_workdir_path": "Copier le chemin du répertoire de travail local",
+    "copy_project_directory_path": "Copier le chemin du dossier du projet",
     "relations": "Relations",
     "create_sub_issue": "Créer un sous-ticket",
     "set_parent_issue": "Définir le ticket parent...",
     "remove_parent_issue": "Retirer le ticket parent",
     "remove_parent_issue_success": "Ticket parent retiré",
     "add_sub_issue": "Ajouter un sous-ticket...",
-    "delete_issue": "Supprimer le ticket",
-    "copy_project_directory_path": "Copier le chemin du dossier du projet"
+    "delete_issue": "Supprimer le ticket"
   },
   "pickers": {
     "custom_property": {
@@ -789,29 +806,16 @@
     "visible_toggle": "Afficher dans la barre de vues",
     "more_label": "Plus de vues"
   },
-  "status_catalog_error": {
-    "title": "Impossible de charger la liste des états",
-    "hint": "Les tickets restent masqués tant qu'elle n'est pas chargée, car un filtre par état ne peut pas s'appliquer sans elle.",
-    "retry": "Réessayer"
-  },
-  "revision": {
-    "conflict": "Le ticket ou le commentaire a changé. La dernière version a été rechargée ; comparez-les avant d'enregistrer à nouveau.",
-    "compare_title": "Le titre a été modifié en parallèle. Comparez les deux versions.",
-    "compare_description": "La description a été modifiée en parallèle. Comparez les deux versions.",
-    "compare_comment": "Le commentaire a été modifié en parallèle. Comparez les deux versions.",
-    "server_version": "Dernière version du serveur",
-    "local_version": "Votre version locale",
-    "keep_local": "Garder ma version",
-    "use_server": "Utiliser la dernière version"
-  },
   "plugins": {
     "panels": "Plugins",
     "surface_failed": "{{name}} n'a pas pu charger son interface.",
-    "surface_local_only": "{{name}} a été installé depuis une source locale, son interface ne peut donc pas être chargée dans le navigateur.",
     "hook_succeeded": "{{name}} a terminé.",
     "hook_failed": "{{name}} a échoué.",
     "hook_refused": "{{name}} n'a pas été exécuté.",
     "hook_activity": "Appels récents",
-    "hook_never_run": "Ce hook n'a encore jamais été exécuté."
+    "hook_never_run": "Ce hook n'a encore jamais été exécuté.",
+    "surface_loading": "Chargement de {{name}}…",
+    "surface_unavailable": "{{name}} n'a pas pu charger son interface. La version installée ne la contient peut-être pas.",
+    "surface_navigated": "{{name}} a tenté de remplacer son panneau par une page chargée depuis ailleurs. Il a été arrêté et déconnecté — prévenez l'administrateur de votre espace de travail."
   }
 }
