@@ -247,6 +247,10 @@
       "goSettings": {
         "label": "Aller aux paramètres",
         "description": "Ouvrir les paramètres de l'espace de travail."
+      },
+      "toggleRightSidebar": {
+        "label": "Basculer la barre latérale droite",
+        "description": "Affiche ou masque la barre latérale droite quand la page courante en a une."
       }
     },
     "fixed": {
@@ -409,6 +413,20 @@
       "installed_version": "Utilisée",
       "review_install": "Examiner et installer",
       "review_upgrade": "Examiner et mettre à niveau"
+    },
+    "schedule": {
+      "title": "Planifications automatiques",
+      "consent_title": "Ce plugin exécutera ses hooks automatiquement",
+      "consent_description": "L'installation ou la mise à jour active ces planifications. Si plusieurs échéances sont manquées, seule la dernière due est délivrée.",
+      "next_run": "Prochaine : {{time}}",
+      "activity_title": "Distributions récentes",
+      "activity_last": "{{status}} · prévue {{planned}} · envoyée {{actual}} · tentative {{attempt}}",
+      "activity_empty": "Pas encore distribuée",
+      "frequency_minutes_one": "Toutes les minutes",
+      "frequency_minutes_other": "Toutes les {{count}} minutes",
+      "frequency_hourly": "Chaque heure à la minute {{minute}}",
+      "frequency_daily": "Chaque jour à {{hour}}:{{minute}}",
+      "frequency_custom": "Planification récurrente personnalisée"
     }
   },
   "properties": {

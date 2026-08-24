@@ -240,7 +240,9 @@
     "service_tier_default": "Valeur par défaut du runtime",
     "service_tier_tooltip": "Vitesse · {{value}}",
     "service_tier_clear": "Valeur par défaut du runtime",
-    "service_tier_clear_title": "Effacer la surcharge de vitesse et laisser la configuration locale de Codex décider"
+    "service_tier_clear_title": "Effacer la surcharge de vitesse et laisser la configuration locale de Codex décider",
+    "model_discovery_failed_title": "Échec de la découverte des modèles",
+    "model_discovery_failed_hint": "Le fournisseur n'a pas répondu — vérifie la clé API ou réessaie plus tard"
   },
   "model_dropdown": {
     "label": "Modèle",
@@ -874,14 +876,48 @@
     "tool_kind_read": "Lectures",
     "tool_kind_misc": "Autres",
     "details_project_directory": "Dossier du projet",
-    "copy_project_directory": "Copier le dossier du projet"
+    "copy_project_directory": "Copier le dossier du projet",
+    "details_diagnostics": "Technical details"
   },
   "task_failure": {
-    "agent_error": "Erreur d'exécution de l'agent",
-    "timeout": "Délai de la tâche dépassé",
-    "runtime_offline": "Daemon hors ligne",
-    "runtime_recovery": "Daemon redémarré",
-    "manual": "Annulée par l'utilisateur"
+    "cancelled_by_system": "Annulée par le système",
+    "reasons": {
+      "queued_expired": "Expirée dans la file",
+      "runtime_offline": "Daemon hors ligne",
+      "runtime_reconnect_timeout": "Daemon non reconnecté à temps",
+      "runtime_recovery": "Daemon redémarré",
+      "timeout": "Tâche expirée",
+      "iteration_limit": "Limite d'itérations atteinte",
+      "agent_blocked": "En attente d'une intervention humaine",
+      "api_invalid_request": "Rejetée par l'API du modèle",
+      "skill_bundle_unavailable": "Impossible de télécharger les compétences de l'agent",
+      "runtime_cli_timeout": "Timeout du CLI du runtime local",
+      "invalid_task_identity": "Identité de tâche incorrecte",
+      "issue_window_restricted": "Ticket indisponible selon les limites du workspace",
+      "agent_error_provider_auth_or_access": "Échec d'authentification du fournisseur",
+      "agent_error_provider_quota_limit": "Quota du fournisseur épuisé",
+      "agent_error_provider_capacity_or_rate_limit": "Limité par le fournisseur (débit ou capacité)",
+      "agent_error_provider_server_error": "Erreur du serveur du fournisseur",
+      "agent_error_provider_network": "Erreur réseau vers le fournisseur",
+      "agent_error_process_failure": "L'agent a planté",
+      "agent_error_empty_or_unparseable_output": "L'agent n'a rien rendu d'exploitable",
+      "agent_error_agent_timeout": "L'agent a expiré",
+      "agent_error_context_overflow": "Fenêtre de contexte dépassée",
+      "agent_error_missing_config": "Clé API ou configuration manquante",
+      "agent_error_model_not_found_or_unavailable": "Modèle indisponible",
+      "agent_error_runtime_version_unsupported": "Version du runner non prise en charge",
+      "agent_error_runtime_missing_executable": "CLI du runner non installée",
+      "agent_error_unknown": "Erreur d'exécution de l'agent",
+      "agent_fallback_message": "L'agent a renvoyé un message de repli",
+      "codex_resume_oversized": "Session trop grosse pour être reprise",
+      "idle_watchdog": "Agent arrêté après inactivité",
+      "local_directory_error": "Erreur de répertoire local",
+      "cancelled": "Annulée par le système",
+      "agent_error": "Erreur d'exécution de l'agent",
+      "codex_semantic_inactivity": "Inactivité sémantique Codex (aucun progrès réel)",
+      "manual": "Annulée par l'utilisateur",
+      "user_cancelled": "Annulée par l'utilisateur"
+    }
   },
   "last_active": {
     "today": "Aujourd'hui",
@@ -910,5 +946,6 @@
     "selected_one": "{{count}} sélectionné",
     "selected_other": "{{count}} sélectionnés",
     "clear_selection": "Effacer la sélection"
-  }
+  },
+  "presence_status_aria": "Statut : {{status}}"
 }

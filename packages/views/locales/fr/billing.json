@@ -255,7 +255,8 @@
       "delayed_description_with_expiry": "La vérification automatique s'est arrêtée. Si la tentative est toujours en attente après {{date}}, actualisez les sièges pour la libérer et demandez un nouveau devis ; contactez l'assistance avant d'en lancer un autre.",
       "submitted_one": "Un achat de {{count}} siège a été soumis. La nouvelle capacité apparaîtra une fois que Stripe l'aura confirmé.",
       "submitted_other": "Un achat de {{count}} sièges a été soumis. La nouvelle capacité apparaîtra une fois que Stripe l'aura confirmé.",
-      "error_title": "Impossible de mettre à jour l'estimation"
+      "error_title": "Impossible de mettre à jour l'estimation",
+      "capacity_out_of_sync": "La capacité affichée n'est plus synchronisée — recharge la page"
     },
     "confirm": {
       "title": "Continuer vers Stripe Checkout ?",

@@ -88,5 +88,16 @@
     "archive_completed_failed": "Échec de l'archivage des éléments terminés",
     "unarchive_failed": "Échec du désarchivage",
     "archived_load_failed": "Échec du chargement des notifications archivées"
+  },
+  "filters": {
+    "tooltip": "Filtrer les éléments de la boîte de réception",
+    "active_count_one": "{{count}} filtre actif",
+    "active_count_other": "{{count}} filtres actifs",
+    "status": "Statut",
+    "priority": "Priorité",
+    "notification_count_one": "{{count}} notification",
+    "notification_count_other": "{{count}} notifications",
+    "clear": "Effacer les filtres",
+    "empty": "Aucun élément ne correspond aux filtres"
   }
 }
