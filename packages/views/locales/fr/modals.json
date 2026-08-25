@@ -219,7 +219,8 @@
       "error_agent_unavailable_fallback": "L'agent est indisponible. Choisissez-en un autre.",
       "error_daemon_version": "Le CLI du daemon de cet agent ({{current}}) est inférieur au minimum requis {{min}}. Mettez le daemon à jour pour utiliser la création avec un agent.",
       "error_unknown": "Échec de l'envoi. Réessayez.",
-      "sub_issue_of": "Sous-ticket de {{identifier}}"
+      "sub_issue_of": "Sous-ticket de {{identifier}}",
+      "source_context_prompt_placeholder": "Dis à l'agent quoi faire avec ce contexte, ex. « continue d'enquêter et corrige le problème décrit ici »"
     }
   }
 }

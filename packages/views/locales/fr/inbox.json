@@ -37,7 +37,8 @@
     "original_input": "Saisie d'origine",
     "edit_advanced": "Modifier en mode avancé",
     "archive": "Archiver",
-    "unarchive": "Désarchiver"
+    "unarchive": "Désarchiver",
+    "retry_with_context": "Relancer avec le contexte"
   },
   "types": {
     "issue_assigned": "Assigné",
@@ -75,7 +76,8 @@
   },
   "toasts": {
     "archived": "Notification archivée",
-    "unarchived": "Notification restaurée"
+    "unarchived": "Notification restaurée",
+    "source_context_retry_started": "Relance lancée avec le contexte d'origine"
   },
   "errors": {
     "mark_read_failed": "Échec du marquage comme lu",
@@ -87,7 +89,9 @@
     "archive_all_read_failed": "Échec de l'archivage des éléments lus",
     "archive_completed_failed": "Échec de l'archivage des éléments terminés",
     "unarchive_failed": "Échec du désarchivage",
-    "archived_load_failed": "Échec du chargement des notifications archivées"
+    "archived_load_failed": "Échec du chargement des notifications archivées",
+    "source_context_retry_failed": "Impossible de réessayer avec le contexte d'origine",
+    "source_context_retry_unavailable": "Ce contexte ne peut plus être relancé. Repars du point de branchement."
   },
   "filters": {
     "tooltip": "Filtrer les éléments de la boîte de réception",

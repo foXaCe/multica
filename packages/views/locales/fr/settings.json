@@ -7,7 +7,6 @@
     "show_archived": "Afficher les archivés ({{count}})",
     "archived_badge": "Archivé",
     "archived_hint": "Retiré des nouvelles affectations. Les tickets qui le portent le gardent.",
-    "flag_off": "Les états personnalisés ne sont pas encore activés sur cette installation. Les états intégrés ci-dessous fonctionnent normalement.",
     "reorder_failed": "Le nouvel ordre n'a pas pu être enregistré.",
     "actions": {
       "open": "Actions pour {{name}}",
@@ -1212,6 +1211,14 @@
     "expiry_24h": "24 heures",
     "expiry_7d": "7 jours",
     "expiry_30d": "30 jours",
-    "expiry_never": "Jamais"
+    "expiry_never": "Jamais",
+    "toast_seat_capacity_unavailable": "La capacité membres n'a pas pu être vérifiée. Réessaie.",
+    "seat_purchase_title": "Ajouter un siège pour envoyer cette invitation ?",
+    "seat_purchase_description": "Aucun siège acheté n'est disponible pour {{email}}. Vérifie l'estimation Stripe, puis approuve l'achat et l'invitation ensemble.",
+    "purchase_seat_and_invite": "Acheter 1 siège et inviter",
+    "retry_seat_purchase": "Réessayer l'achat",
+    "seat_purchase_waiting": "Waiting for Stripe to confirm the new seat. Keep this page open so the invitation can be sent automatically; if you leave, the purchased seat remains and you can invite again later.",
+    "seat_purchase_timeout": "The seat purchase was submitted, but confirmation is taking longer than expected. No invitation was sent. Retry the invitation after Billing shows an available seat.",
+    "seat_purchase_capacity_taken": "Le siège acheté n'est plus disponible, l'invitation n'a pas été envoyée. Vérifie les sièges actuels avant de réessayer."
   }
 }

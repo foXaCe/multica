@@ -97,7 +97,6 @@
       "upgrade": "Passer à Pro",
       "manage": "Gérer la facturation",
       "add_seats": "Ajouter des sièges",
-      "refresh_seats": "Actualiser les sièges",
       "cancel": "Annuler",
       "continue_to_stripe": "Continuer vers Stripe"
     },
@@ -110,9 +109,7 @@
       "checkout_failed": "Le paiement n'a pas pu être créé. Réessayez dans un instant.",
       "portal_response": "Le portail de facturation n'a pas pu s'ouvrir car la réponse du serveur était illisible.",
       "portal_unavailable": "Le portail de facturation n'est pas disponible pour cet espace de travail. Le forfait actuel a été actualisé.",
-      "portal_failed": "Le portail de facturation n'a pas pu être ouvert. Réessayez dans un instant.",
-      "reconcile_response": "Les sièges ont été actualisés, mais le résultat n'a pas pu être lu. Rechargez la page pour confirmer le nombre actuel.",
-      "reconcile_failed": "Les sièges n'ont pas pu être actualisés. Les modifications de membres restent enregistrées et le rapprochement périodique réessaiera."
+      "portal_failed": "Le portail de facturation n'a pas pu être ouvert. Réessayez dans un instant."
     },
     "return": {
       "cancel_title": "Paiement annulé",
@@ -226,7 +223,9 @@
       "summary_unavailable_title": "Une partie du détail des sièges est indisponible",
       "summary_unavailable_description": "Le forfait en cours reste affiché, mais les nombres de sièges facturés et programmés n'ont pas pu être chargés.",
       "updated": "Sièges actualisés",
-      "reconciled": "Membres actuels : {{actual}} · sièges facturés : {{billed}}"
+      "members_over_capacity_title": "Les membres dépassent les sièges achetés",
+      "members_over_capacity_description": "Ce workspace a {{actual}} membres mais seulement {{purchased}} sièges achetés. Ajoute assez de sièges ou retire des membres avant d'envoyer plus d'invitations.",
+      "occupancy_over_capacity_description": "This workspace occupies {{occupied}} of {{purchased}} purchased seats ({{members}} members and {{reserved}} pending invitations). Add seats, remove a member, or revoke a pending invitation before inviting someone else."
     },
     "seat_purchase": {
       "title": "Ajouter des sièges",
