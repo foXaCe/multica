@@ -16,6 +16,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 	db "github.com/multica-ai/multica/server/pkg/db/generated"
 	"github.com/multica-ai/multica/server/pkg/plugincontract"
@@ -50,9 +51,10 @@ const (
 	hookEventAttempts = 3
 	hookEventBackoff  = 2 * time.Second
 
-	// Circuit breaker. After this many failures inside the window, event
+	// Circuit breaker. After this many failures inside the window, background
 	// delivery for the hook stops until the window rolls off — an endpoint that
-	// has been down for a minute does not need one request per event to notice.
+	// has been down for a minute does not need one request per event or schedule
+	// occurrence to notice.
 	hookBreakerThreshold = 5
 	hookBreakerWindow    = 5 * time.Minute
 
@@ -76,9 +78,9 @@ type HookResult struct {
 //
 // This is the whole identity model for hooks, and it follows the trigger rather
 // than the plugin: a ui/manual hook runs because a person pressed something, so
-// its writes stay that person's (marked via_plugin_id); an event hook has no
-// person behind it and must not borrow the last one who happened to touch the
-// issue.
+// its writes stay that person's (marked via_plugin_id); event/schedule hooks
+// have no person behind them and must not borrow the last one who touched the
+// resource.
 type HookActor struct {
 	Type string
 	ID   pgtype.UUID
@@ -86,6 +88,10 @@ type HookActor struct {
 
 // HookInvocation is one call the engine has been asked to make.
 type HookInvocation struct {
+	// ID is allocated before the outbound request. The receiver can log it and
+	// correlate a response with the durable invocation row even when the call
+	// itself fails.
+	ID           pgtype.UUID
 	Installation db.PluginInstallation
 	Hook         plugincontract.Hook
 	Trigger      string
@@ -97,18 +103,27 @@ type HookInvocation struct {
 	// grant to reach across the workspace.
 	IssueID pgtype.UUID
 	Input   any
+	// DeliveryID is stable across retries of the same scheduled occurrence.
+	// PlannedAt is the canonical UTC cron occurrence, not delivery wall time.
+	DeliveryID string
+	PlannedAt  pgtype.Timestamptz
+	Attempt    int
 }
 
 // hookRequestBody is the wire format. Stable and small on purpose: a hook
 // handler written against v1 should not have to care what else the host learns
 // how to send later.
 type hookRequestBody struct {
-	Version      int    `json:"version"`
-	HookKey      string `json:"hook_key"`
-	Trigger      string `json:"trigger"`
-	EventType    string `json:"event_type,omitempty"`
-	WorkspaceID  string `json:"workspace_id"`
-	Installation string `json:"installation_id"`
+	Version      int       `json:"version"`
+	InvocationID string    `json:"invocation_id"`
+	DeliveryID   string    `json:"delivery_id,omitempty"`
+	Attempt      int       `json:"attempt"`
+	OccurredAt   time.Time `json:"occurred_at"`
+	HookKey      string    `json:"hook_key"`
+	Trigger      string    `json:"trigger"`
+	EventType    string    `json:"event_type,omitempty"`
+	WorkspaceID  string    `json:"workspace_id"`
+	Installation string    `json:"installation_id"`
 	// IssueID is the issue this call is about, as resolved and permission-checked
 	// by the host. Sent because the alternative is every handler reading it out
 	// of client-supplied `input` — unvalidated, and absent entirely for the event
@@ -116,17 +131,32 @@ type hookRequestBody struct {
 	IssueID string           `json:"issue_id,omitempty"`
 	Actor   hookRequestActor `json:"actor"`
 	Input   json.RawMessage  `json:"input,omitempty"`
+	// Config is the installation's non-secret configuration, the values an
+	// administrator typed into the host-rendered form. Sent because the handler
+	// has no other way to read them — the Action API deliberately has no config
+	// endpoint — and a plugin forced to keep its own second copy would make the
+	// manifest's config block decorative.
+	//
+	// Secret-typed fields are NEVER included. They are the plugin's credentials
+	// for ITS OWN services; it already has them, and putting them on the wire
+	// would hand every value to whoever holds the endpoint.
+	Config map[string]any `json:"config,omitempty"`
 	// CallbackToken lets the handler call the Action API back for the few
 	// minutes it is valid. Narrower than the installation's own token and tied
 	// to this one call, so a handler that leaks it leaks a few minutes of the
 	// scopes it was already using, not standing access.
-	CallbackToken string `json:"callback_token,omitempty"`
-	CallbackURL   string `json:"callback_url,omitempty"`
+	CallbackToken string               `json:"callback_token,omitempty"`
+	CallbackURL   string               `json:"callback_url,omitempty"`
+	Schedule      *hookRequestSchedule `json:"schedule,omitempty"`
 }
 
 type hookRequestActor struct {
 	Type string `json:"type"`
 	ID   string `json:"id,omitempty"`
+}
+
+type hookRequestSchedule struct {
+	PlannedAt time.Time `json:"planned_at"`
 }
 
 // FindHook returns the named hook from an installation's consented manifest.
@@ -162,10 +192,16 @@ func HookAllowsTrigger(hook plugincontract.Hook, trigger string) bool {
 // InvokeHook performs one call and records it.
 //
 // Callers pick the blocking behaviour, not this function: ui/manual await the
-// result because a person is watching, and the event dispatcher runs it on its
-// own goroutine because the host request that produced the event must not wait
-// for a third party.
+// result because a person is watching, event delivery runs outside the host
+// request, and schedule delivery runs under the durable scheduler lease.
 func (s *PluginService) InvokeHook(ctx context.Context, invocation HookInvocation, attempt int) (HookResult, error) {
+	if !invocation.ID.Valid {
+		invocation.ID = pgtype.UUID{Bytes: uuid.New(), Valid: true}
+	}
+	if attempt < 1 {
+		attempt = 1
+	}
+	invocation.Attempt = attempt
 	hook := invocation.Hook
 	result := HookResult{HookKey: hook.Key, Trigger: invocation.Trigger, Attempts: attempt}
 
@@ -312,9 +348,49 @@ func (s *PluginService) callHookEndpoint(ctx context.Context, invocation HookInv
 	return json.RawMessage(payload), nil
 }
 
+// nonSecretConfig reads the installation's stored configuration and drops
+// anything the manifest declared as a secret.
+//
+// Filtered against the MANIFEST rather than against the stored shape: secrets
+// live in their own table and should never appear in the config column at all,
+// so this is the check that would catch it if one ever did.
+func nonSecretConfig(installation db.PluginInstallation) map[string]any {
+	if len(installation.Config) == 0 {
+		return nil
+	}
+	values := map[string]any{}
+	if err := json.Unmarshal(installation.Config, &values); err != nil {
+		return nil
+	}
+	manifest, err := ParseInstallationManifest(installation)
+	if err != nil {
+		// Without a manifest there is no way to tell which keys are secret, so
+		// send none of them.
+		return nil
+	}
+	for key := range values {
+		field, declared := manifest.Config.Field(key)
+		if !declared || field.Type == plugincontract.ConfigSecret {
+			delete(values, key)
+		}
+	}
+	if len(values) == 0 {
+		return nil
+	}
+	return values
+}
+
 func (s *PluginService) buildHookBody(ctx context.Context, invocation HookInvocation) (hookRequestBody, error) {
+	attempt := invocation.Attempt
+	if attempt < 1 {
+		attempt = 1
+	}
 	body := hookRequestBody{
 		Version:      1,
+		InvocationID: uuidString(invocation.ID),
+		DeliveryID:   invocation.DeliveryID,
+		Attempt:      attempt,
+		OccurredAt:   time.Now().UTC(),
 		HookKey:      invocation.Hook.Key,
 		Trigger:      invocation.Trigger,
 		EventType:    invocation.EventType,
@@ -322,9 +398,13 @@ func (s *PluginService) buildHookBody(ctx context.Context, invocation HookInvoca
 		Installation: uuidString(invocation.Installation.ID),
 		Actor:        hookRequestActor{Type: invocation.Actor.Type, ID: uuidString(invocation.Actor.ID)},
 	}
+	if invocation.PlannedAt.Valid {
+		body.Schedule = &hookRequestSchedule{PlannedAt: invocation.PlannedAt.Time.UTC()}
+	}
 	if invocation.IssueID.Valid {
 		body.IssueID = uuidString(invocation.IssueID)
 	}
+	body.Config = nonSecretConfig(invocation.Installation)
 	if invocation.Input != nil {
 		encoded, err := json.Marshal(invocation.Input)
 		if err != nil {
@@ -373,6 +453,9 @@ func (s *PluginService) SignHookPayload(installationID pgtype.UUID, timestamp st
 func (s *PluginService) hookSigningKey(installationID pgtype.UUID) ([]byte, error) {
 	if len(s.DeploymentKey) == 0 {
 		return nil, pluginErrf(PluginErrorUnavailable, "hooks are disabled: MULTICA_PLUGIN_SECRET_KEY is not configured")
+	}
+	if len(s.DeploymentKey) != 32 {
+		return nil, pluginErrf(PluginErrorUnavailable, "hooks are disabled: MULTICA_PLUGIN_SECRET_KEY must decode to 32 bytes")
 	}
 	mac := hmac.New(sha256.New, s.DeploymentKey)
 	mac.Write([]byte("multica-plugin-hook-signature:v1:"))
@@ -442,8 +525,8 @@ func (s *PluginService) checkHookRate(ctx context.Context, installationID pgtype
 	return nil
 }
 
-// HookBreakerOpen reports whether event delivery for this hook is currently
-// suspended after repeated failures.
+// HookBreakerOpen reports whether background delivery for this hook is
+// currently suspended after repeated failures.
 func (s *PluginService) HookBreakerOpen(ctx context.Context, installationID pgtype.UUID, hookKey string) bool {
 	since := pgtype.Timestamptz{Time: time.Now().Add(-hookBreakerWindow), Valid: true}
 	failures, err := s.Queries.CountRecentPluginFailures(ctx, db.CountRecentPluginFailuresParams{
@@ -459,6 +542,7 @@ func (s *PluginService) HookBreakerOpen(ctx context.Context, installationID pgty
 
 func (s *PluginService) recordInvocation(ctx context.Context, invocation HookInvocation, status string, attempt, latency int, message string) {
 	params := db.CreatePluginInvocationParams{
+		ID:             invocation.ID,
 		InstallationID: invocation.Installation.ID,
 		WorkspaceID:    invocation.Installation.WorkspaceID,
 		HookKey:        invocation.Hook.Key,
@@ -466,6 +550,12 @@ func (s *PluginService) recordInvocation(ctx context.Context, invocation HookInv
 		Status:         status,
 		Attempt:        int32(attempt),
 		LatencyMs:      int32(latency),
+	}
+	if invocation.DeliveryID != "" {
+		params.DeliveryID = pgtype.Text{String: invocation.DeliveryID, Valid: true}
+	}
+	if invocation.PlannedAt.Valid {
+		params.PlannedAt = invocation.PlannedAt
 	}
 	if invocation.EventType != "" {
 		params.EventType = pgtype.Text{String: invocation.EventType, Valid: true}

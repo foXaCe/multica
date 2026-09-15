@@ -46,7 +46,7 @@ export function StatusPicker({
   // detail, table, board batch toolbar, create-issue modal), so the provider
   // is guaranteed here.
   const wsId = useWorkspaceId();
-  const { categoryOf, entryOf } = useIssueStatuses(wsId);
+  const { categoryOf, colorOf, iconOf } = useIssueStatuses(wsId);
   const labelOf = useStatusLabel(wsId);
 
   /**
@@ -87,7 +87,8 @@ export function StatusPicker({
             <StatusIcon
               status={status}
               category={categoryOf(status)}
-              color={entryOf(status)?.color}
+              color={colorOf(status)}
+              icon={iconOf(status)}
               className="h-3.5 w-3.5 shrink-0"
             />
             <span className="truncate">{labelOf(status)}</span>
@@ -110,6 +111,7 @@ export function StatusPicker({
             status={option.key}
             category={option.category}
             color={option.color}
+            icon={option.icon}
             className="h-3.5 w-3.5"
           />
           <span className="truncate">{option.label}</span>
