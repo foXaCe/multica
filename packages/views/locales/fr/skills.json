@@ -25,7 +25,7 @@
     },
     "empty": {
       "title": "Aucun skill pour l'instant",
-      "description": "Créez votre premier skill, importez-en un depuis une URL, ou copiez-en un depuis un runtime connecté — et tous les agents de l'espace de travail pourront l'utiliser."
+      "description": "Créez votre premier skill, importez-en un depuis une URL ou un dossier local, ou copiez-en un depuis un runtime connecté : tous les agents de l'espace de travail pourront l'utiliser."
     },
     "no_matches": {
       "title": "Aucune correspondance",
@@ -36,7 +36,7 @@
     },
     "intro_banner": {
       "title": "Partagés avec votre espace de travail.",
-      "body": "Chacun peut créer un skill, en importer un depuis une URL, ou en copier un depuis son runtime local — et tous les agents peuvent l'utiliser.",
+      "body": "Chacun peut créer un skill, en importer un depuis une URL ou un dossier local, ou en copier un depuis son runtime local : tous les agents pourront l'utiliser.",
       "highlight": "Les skills d'un runtime local restent privés tant que vous n'en copiez pas un ici."
     },
     "list_error": {
@@ -113,6 +113,10 @@
     "filter_active_count_other": "{{count}} filtres",
     "clear_filters": "Effacer les filtres",
     "section_usage": "Utilisation",
+    "section_labels": "Étiquettes",
+    "filter_search_placeholder": "Filtrer...",
+    "no_labels": "Aucune étiquette pour l'instant",
+    "no_results": "Aucun résultat",
     "display": "Affichage",
     "sort_by": "Trier par",
     "direction_asc": "Croissant",
@@ -252,24 +256,20 @@
       },
       "manual": {
         "title": "Créer manuellement",
-        "desc": "Rédigez un nouveau SKILL.md à partir de zéro."
+        "desc": "Commencez avec un fichier SKILL.md vide."
+      },
+      "local": {
+        "title": "Importer depuis cet appareil",
+        "desc": "Choisissez un dossier contenant SKILL.md ou une archive .skill / .zip."
       },
       "url": {
         "title": "Importer depuis une URL",
-        "desc": "Récupérez un skill publié par son URL. Les fichiers sont téléchargés côté serveur."
+        "desc": "Récupérez un skill publié depuis son URL."
       },
       "runtime": {
         "title": "Copier depuis un runtime",
-        "desc": "Analysez un runtime local et faites remonter l'un de ses skills présents sur le disque dans cet espace de travail."
+        "desc": "Partagez un skill installé sur votre runtime local."
       }
-    },
-    "method_card": {
-      "manual_title": "Créer manuellement",
-      "manual_desc": "Partez d'un SKILL.md vierge et rédigez vos propres instructions.",
-      "url_title": "Importer depuis une URL",
-      "url_desc": "Récupérez un skill publié depuis ClawHub ou Skills.sh.",
-      "runtime_title": "Copier depuis un runtime",
-      "runtime_desc": "Faites remonter un skill déjà installé sur votre runtime local."
     },
     "manual": {
       "name_label": "Nom",
@@ -283,6 +283,24 @@
       "submit": "Créer le skill",
       "submitting": "Création…",
       "toast_created": "Skill créé"
+    },
+    "local": {
+      "choose_folder": "Choisir un dossier",
+      "choose_archive": "Choisir un fichier .skill / .zip",
+      "folder_label": "Dossier",
+      "archive_label": "Archiver",
+      "files_one": "{{count}} fichier",
+      "files_other": "{{count}} fichiers",
+      "missing_skill_md": "Ce dossier n'est pas un skill : il ne contient pas de fichier SKILL.md.",
+      "too_large": "Ce skill est trop volumineux pour être importé.",
+      "empty": "Le dossier est vide.",
+      "too_many_files": "Ce skill contient trop de fichiers pour être importé.",
+      "name_conflict_hint": " Le nom du skill importé existe déjà — supprimez l'existant avant de réessayer.",
+      "fallback_error": "Échec de l'importation",
+      "cancel": "Annuler",
+      "import": "Importer",
+      "importing": "Importation…",
+      "toast_imported": "Skill importé"
     },
     "url": {
       "url_label": "URL du skill",

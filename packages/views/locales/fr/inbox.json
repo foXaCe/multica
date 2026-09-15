@@ -9,6 +9,19 @@
     "archive_all_read": "Archiver tout ce qui est lu",
     "archive_completed": "Archiver les éléments terminés"
   },
+  "filters": {
+    "tooltip": "Filtrer la boîte de réception",
+    "active_count_one": "{{count}} filtre actif",
+    "active_count_other": "{{count}} filtres actifs",
+    "status": "Statut",
+    "priority": "Priorité",
+    "from": "De",
+    "unread_only": "Non lues uniquement",
+    "notification_count_one": "{{count}} notification",
+    "notification_count_other": "{{count}} notifications",
+    "clear": "Effacer les filtres",
+    "empty": "Aucune notification ne correspond à vos filtres"
+  },
   "context_menu": {
     "mark_read": "Marquer comme lu",
     "mark_unread": "Marquer comme non lu",
@@ -35,7 +48,10 @@
     "select_prompt": "Sélectionnez une notification pour afficher les détails",
     "empty": "Votre boîte de réception est vide",
     "original_input": "Saisie d'origine",
+    "retry_with_context": "Réessayer avec le contexte",
     "edit_advanced": "Modifier en mode avancé",
+    "autopilot_quota_exceeded_body": "Cet espace de travail a atteint sa limite de {{limit}} exécutions d'automatisation pour la période actuelle. Les prochaines exécutions d'automatisation ne démarreront qu'après la réinitialisation du quota {{resetAt}}.",
+    "autopilot_quota_upgrade": "Voir les options de mise à niveau",
     "archive": "Archiver",
     "unarchive": "Désarchiver"
   },
@@ -51,14 +67,16 @@
     "new_comment": "Nouveau commentaire",
     "mentioned": "Mentionné",
     "review_requested": "Relecture demandée",
-    "task_completed": "Tâche terminée",
-    "task_failed": "Tâche en échec",
+    "task_completed": "Exécution terminée",
+    "task_failed": "Exécution en échec",
     "agent_blocked": "Agent bloqué",
     "agent_completed": "Agent terminé",
     "reaction_added": "Réaction",
     "quick_create_done": "Créé avec un agent",
     "quick_create_failed": "Échec de la création avec un agent",
-    "quick_create_unconfirmed": "Création avec un agent non confirmée"
+    "quick_create_unconfirmed": "Création avec un agent non confirmée",
+    "autopilot_paused": "Automatisation en pause",
+    "autopilot_quota_exceeded": "Limite d'exécutions d'automatisation atteinte"
   },
   "labels": {
     "set_status_to": "Statut défini sur",
@@ -71,13 +89,17 @@
     "removed_due_date": "Date d'échéance retirée",
     "reacted_to_comment": "A réagi {{emoji}} à votre commentaire",
     "created_with_agent": "Créé avec un agent : {{identifier}}",
-    "failed_with_detail": "Échec : {{detail}}"
+    "failed_with_detail": "Échec : {{detail}}",
+    "autopilot_quota_blocked": "Exécution bloquée car la limite a été atteinte"
   },
   "toasts": {
+    "source_context_retry_started": "Nouvelle tentative démarrée avec le contexte d'origine",
     "archived": "Notification archivée",
     "unarchived": "Notification restaurée"
   },
   "errors": {
+    "source_context_retry_failed": "Impossible de réessayer avec le contexte d'origine",
+    "source_context_retry_unavailable": "Ce contexte ne peut plus être réutilisé pour une nouvelle tentative. Recommencez depuis le point de branchement.",
     "mark_read_failed": "Échec du marquage comme lu",
     "mark_unread_failed": "Échec du marquage comme non lu",
     "archive_failed": "Échec de l'archivage",

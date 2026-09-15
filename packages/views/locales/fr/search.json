@@ -1,21 +1,21 @@
 {
   "title": "Recherche",
-  "description": "Rechercher des pages, des tickets, des projets et des membres",
+  "description": "Rechercher des pages, des tâches, des projets et des membres",
   "placeholder": "Saisissez une commande ou une recherche...",
   "groups": {
     "pages": "Pages",
     "commands": "Commandes",
     "members": "Membres",
     "projects": "Projets",
-    "issues": "Tickets",
+    "issues": "Tâches",
     "cancelled": "Annulés",
     "recent": "Récents"
   },
   "commands": {
     "current_theme_aria": "Thème actuel",
-    "new_issue": "Nouveau ticket",
+    "new_issue": "Nouvelle tâche",
     "new_project": "Nouveau projet",
-    "copy_issue_link": "Copier le lien du ticket",
+    "copy_issue_link": "Copier le lien de la tâche",
     "copy_identifier": "Copier l'identifiant ({{identifier}})",
     "fold_all_comments": "Replier tous les commentaires",
     "unfold_all_comments": "Déplier tous les commentaires",
@@ -29,7 +29,7 @@
   },
   "empty": {
     "no_results": "Aucun résultat.",
-    "type_to_search": "Saisissez du texte pour rechercher des tickets et des projets"
+    "type_to_search": "Saisissez du texte pour rechercher des tâches et des projets"
   },
   "trigger": {
     "label": "Rechercher..."

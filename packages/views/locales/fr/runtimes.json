@@ -29,7 +29,7 @@
   },
   "mika_setup": {
     "title": "Votre runtime est prêt. Commencez avec Mika.",
-    "description": "Mika transforme votre objectif en ticket, mobilise le bon agent et vous aide à ajouter des spécialistes réutilisables quand votre organisation en a besoin.",
+    "description": "Mika transforme votre objectif en tâche, mobilise le bon agent et vous aide à ajouter des spécialistes réutilisables quand votre organisation en a besoin.",
     "action": "Commencer avec Mika",
     "failed": "Impossible de démarrer Mika",
     "dialog_title": "Où Mika doit-il s'exécuter ?",
@@ -94,7 +94,7 @@
   "health": {
     "online": {
       "label": "En ligne",
-      "description": "Battement reçu dans les 45 dernières secondes. Prêt à recevoir des tâches."
+      "description": "Signal reçu au cours des 45 dernières secondes. Prêt à recevoir des exécutions."
     },
     "recently_lost": {
       "label": "Perdu récemment",
@@ -104,9 +104,9 @@
       "label": "Hors ligne",
       "description": "Aucun battement depuis plus de 5 minutes. Redémarrez le daemon ou examinez l'hôte."
     },
-    "about_to_gc": {
-      "label": "Bientôt supprimé",
-      "description": "Hors ligne depuis plus de 6 jours. Suppression automatique au bout de 7 jours, sauf reconnexion."
+    "long_offline": {
+      "label": "Hors ligne depuis longtemps",
+      "description": "Aucun signal depuis au moins 6 jours. Si cette machine doit rester hors ligne, associez ses agents à un autre runtime ou supprimez celui-ci."
     }
   },
   "detail": {
@@ -155,12 +155,12 @@
       "cascade": {
         "title_one": "Dissocier {{count}} agent et supprimer ce runtime ?",
         "title_other": "Dissocier {{count}} agents et supprimer ce runtime ?",
-        "description": "Supprimer « {{name}} ». Les agents ci-dessous sont conservés — leurs instructions, leurs discussions et leur historique de tâches restent intacts — mais ils seront dissociés et ne pourront plus s'exécuter tant que vous ne les aurez pas associés à un autre runtime. Leurs tâches en attente ou en cours seront annulées, puis le runtime sera supprimé.",
-        "warning": "Les tâches en attente et en cours seront annulées, et ces agents ne pourront pas recevoir de nouveau travail tant qu'ils ne seront pas associés à un runtime.",
+        "description": "Supprimer « {{name}} ». Les agents ci-dessous sont conservés : leurs instructions, discussions et historiques d'exécution restent intacts. Ils seront toutefois dissociés et ne pourront plus s'exécuter avant d'être associés à un autre runtime. Leurs exécutions en attente ou en cours seront annulées, puis le runtime sera supprimé.",
+        "warning": "Les exécutions en attente et en cours seront annulées. Ces agents ne pourront recevoir aucun nouveau travail avant d'être associés à un runtime.",
         "notice_runtime_has_active_agents": "Des agents actifs ont été ajoutés depuis l'ouverture de cette boîte de dialogue. Vérifiez le nouveau plan et confirmez.",
         "notice_runtime_delete_plan_changed": "L'ensemble des agents actifs a changé pendant que cette boîte de dialogue était ouverte. Vérifiez le nouveau plan et confirmez.",
-        "checkbox_one": "Je comprends que cet {{count}} agent sera dissocié et ne pourra plus s'exécuter tant que je ne l'aurai pas associé à un runtime, et que toute tâche en attente ou en cours sera annulée.",
-        "checkbox_other": "Je comprends que ces {{count}} agents seront dissociés et ne pourront plus s'exécuter tant que je ne les aurai pas associés à un runtime, et que toute tâche en attente ou en cours sera annulée.",
+        "checkbox_one": "Je comprends que cet agent ({{count}}) sera dissocié et ne pourra plus s'exécuter avant que je l'associe à un runtime, et que ses exécutions en attente ou en cours seront annulées.",
+        "checkbox_other": "Je comprends que ces {{count}} agents seront dissociés et ne pourront plus s'exécuter avant que je les associe à un runtime, et que leurs exécutions en attente ou en cours seront annulées.",
         "cancel": "Annuler",
         "confirm_one": "Dissocier {{count}} agent et supprimer le runtime",
         "confirm_other": "Dissocier {{count}} agents et supprimer le runtime",
@@ -217,7 +217,7 @@
     "copy_aria": "Copier",
     "cancel": "Annuler",
     "success_title": "Ordinateur connecté",
-    "success_description": "Votre ordinateur est en ligne et prêt. Créez un agent et il pourra commencer à prendre des tâches ici.",
+    "success_description": "Votre ordinateur est en ligne et prêt. Créez un agent pour qu'il commence à prendre en charge des exécutions ici.",
     "view_runtime": "Voir le runtime",
     "create_agent": "Créer un agent"
   },

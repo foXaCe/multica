@@ -18,7 +18,7 @@
     "last_run_empty": "--",
     "empty": {
       "title": "Aucune automatisation pour l'instant",
-      "hint": "Planifiez des tâches récurrentes pour vos agents IA. Choisissez un modèle ou partez de zéro."
+      "hint": "Planifiez du travail récurrent pour vos agents IA. Choisissez un modèle ou partez de zéro."
     },
     "scope_all": "Toutes",
     "no_matches": "Aucune automatisation correspondante",
@@ -31,7 +31,7 @@
     "archived": "Archivée"
   },
   "execution_mode": {
-    "create_issue": "Créer un ticket",
+    "create_issue": "Créer une tâche",
     "run_only": "Exécution seule"
   },
   "relative_date": {
@@ -83,6 +83,8 @@
     "run_blocked_target_unavailable": "Non déclenchée — l'agent est indisponible",
     "run_blocked_attribution": "Non déclenchée — l'exécution n'a pas pu être attribuée à un membre responsable",
     "run_blocked_already_active": "Non déclenchée — une exécution récente couvre déjà ce cas",
+    "run_blocked_quota_exceeded": "Non déclenché — la limite d'exécutions de la période est atteinte",
+    "run_blocked_issue_limit_reached": "Non déclenchée : l'espace de travail a atteint sa limite de tâches",
     "run_blocked_generic": "Non déclenchée — l'exécution a été bloquée",
     "section_properties": "Propriétés",
     "section_triggers": "Déclencheurs",
@@ -109,8 +111,7 @@
       "cancel": "Annuler",
       "confirm": "Supprimer",
       "deleting": "Suppression..."
-    },
-    "run_blocked_quota_exceeded": "Non déclenché — la limite d'exécutions de la période est atteinte"
+    }
   },
   "access": {
     "title": "Gérer l'accès",
@@ -127,7 +128,7 @@
     "owner_note": "Le créateur et les administrateurs de l'espace de travail ont toujours accès."
   },
   "run_status": {
-    "issue_created": "Ticket créé",
+    "issue_created": "Tâche créée",
     "running": "En cours",
     "skipped": "Ignorée",
     "completed": "Terminée",
@@ -140,7 +141,7 @@
     "api": "API"
   },
   "run": {
-    "issue_linked": "Ticket lié",
+    "issue_linked": "Tâche liée",
     "view_log": "Voir le journal d'exécution",
     "skipped_group": {
       "label": "Ignorées",
@@ -258,7 +259,7 @@
     "sr_edit": "Modifier l'automatisation",
     "header_create": "Nouvelle automatisation",
     "header_edit": "Modifier l'automatisation",
-    "subtitle": "Une tâche IA récurrente",
+    "subtitle": "Travail IA récurrent",
     "expand": "Développer",
     "collapse": "Replier",
     "close": "Fermer",
@@ -285,10 +286,11 @@
     "select_agent": "Sélectionner un agent",
     "select_assignee": "Sélectionner un agent ou un squad",
     "section_project": "Projet",
+    "project_hint": "Définit aussi le lieu des exécutions : le dépôt ou le répertoire local du projet",
     "no_project": "Aucun projet",
     "section_output_mode": "Mode de sortie",
     "section_subscribers": "Abonnés",
-    "subscribers_hint": "Abonnés automatiquement à chaque ticket créé par cette automatisation",
+    "subscribers_hint": "Abonnés automatiquement à chaque tâche créée par cette automatisation",
     "subscribers_empty": "Aucun abonné — ajoutez un coéquipier pour le notifier à chaque exécution",
     "subscribers_add": "Ajouter un abonné",
     "subscribers_search_placeholder": "Rechercher des membres par nom…",
@@ -309,6 +311,8 @@
     "event_filter_docs_link_label": "Comprendre le fonctionnement des filtres d'événements",
     "event_filter_event_placeholder": "ex. workflow_run",
     "event_filter_actions_placeholder": "completed, failed",
+    "event_filter_add": "Ajouter",
+    "event_filter_remove_label": "Retirer le filtre",
     "event_filter_hint": "Ne traiter que les webhooks correspondant à ces événements. Laissez vide pour tous les accepter.",
     "schedule_disabled_reason": "Cette automatisation a plusieurs planifications — modifiez-les depuis la page de détail.",
     "schedule_empty": "Aucune planification — cette automatisation ne s'exécute que sur déclenchement manuel.",
@@ -317,12 +321,12 @@
     "error_assignee_required": "Choisissez l'agent ou le squad qui exécutera cette automatisation.",
     "output_modes": {
       "create_issue": {
-        "label": "Créer un ticket",
-        "description": "Chaque exécution crée un ticket suivi"
+        "label": "Créer une tâche",
+        "description": "Chaque exécution crée une tâche suivie"
       },
       "run_only": {
         "label": "Exécution seule",
-        "description": "Exécution silencieuse, aucun ticket créé"
+        "description": "Exécution silencieuse, aucune tâche créée"
       }
     }
   },

@@ -22,12 +22,12 @@
     "headline_emphasis": "un seul espace de travail.",
     "lede": "Confiez-leur du travail comme à un collègue — ils s'en saisissent, mettent à jour le statut et commentent une fois terminé.",
     "lede_web": "L'application de bureau embarque le runtime — rien à installer. Continuez sur le web pour connecter votre propre CLI.",
-    "lede_desktop": "À la fin, un vrai agent répondra à votre premier ticket.",
+    "lede_desktop": "À la fin, un vrai agent répondra à votre première tâche.",
     "download_desktop": "Télécharger l'application de bureau",
     "continue_on_web": "Continuer sur le web",
     "start_exploring": "Commencer l'exploration",
     "skip_existing": "Je l'ai déjà fait",
-    "illustration_caption": "Chaque ticket, chaque fil, chaque décision — partagés par votre équipe et vos agents.",
+    "illustration_caption": "Chaque tâche, chaque fil, chaque décision — partagés par votre équipe et vos agents.",
     "illustration": {
       "card1_actor_name": "Vous",
       "card1_actor_initial": "N",
@@ -61,7 +61,8 @@
     "eyebrow": "Une question rapide",
     "lede": "Une seule question — elle nous aide à comprendre à qui Multica est utile. Répondez une fois et vous reprenez votre travail.",
     "submit": "Envoyer",
-    "hint_ready": "C'est bon. Cliquez sur Envoyer quand vous êtes prêt."
+    "hint_ready": "C'est bon. Cliquez sur Envoyer quand vous êtes prêt.",
+    "save_failed_toast": "Échec de l'enregistrement"
   },
   "questions": {
     "about_you": {
@@ -127,7 +128,7 @@
   },
   "cloud_waitlist": {
     "intro_main": "Les runtimes cloud ne sont pas encore actifs. Laissez votre adresse e-mail et nous vous préviendrons dès qu'ils le seront.",
-    "intro_warning": "Attention : les agents ne peuvent pas exécuter de tâches sans runtime — si vous passez maintenant, rien ne s'exécutera tant que vous n'en aurez pas installé un.",
+    "intro_warning": "Attention : les agents ne peuvent pas démarrer d'exécutions sans runtime. Si vous passez maintenant, rien ne s'exécutera tant que vous n'en aurez pas installé un.",
     "email_label": "E-mail",
     "email_placeholder": "vous@entreprise.com",
     "reason_label": "Pourquoi le cloud ?",
@@ -142,7 +143,7 @@
     "skip": {
       "loading": "Configuration de votre espace de travail…",
       "title": "Bienvenue sur Multica !",
-      "subtitle": "Nous avons ajouté un ticket pour vous aider à connecter un runtime. Une fois prêt, commencez avec Mika depuis Runtimes.",
+      "subtitle": "Nous avons ajouté une tâche pour vous aider à connecter un runtime. Une fois prêt, commencez avec Mika depuis Runtimes.",
       "got_it": "Compris",
       "status_in_progress": "En cours",
       "error_title": "Nous n'avons pas pu mettre cela en place",
@@ -162,17 +163,17 @@
     "eyebrow_resume": "Reprendre ou repartir de zéro",
     "headline_first": "Nommez votre espace de travail.",
     "headline_resume": "Continuez avec {{name}}, ou créez-en un autre.",
-    "lede_first": "Un espace de travail réunit vos tickets, vos agents et vos projets. Vous pourrez inviter des coéquipiers ou en créer d'autres plus tard.",
+    "lede_first": "Un espace de travail réunit vos tâches, vos agents et vos projets. Vous pourrez inviter des coéquipiers ou en créer d'autres plus tard.",
     "lede_resume": "Reprenez la configuration avec l'espace de travail que vous avez déjà, ou créez-en un nouveau à côté — vous pouvez appartenir à autant d'espaces que vous voulez.",
     "name_label": "Nom de l'espace de travail",
     "name_placeholder": "Acme Inc, Mon labo, Projets perso…",
     "random_name": "Aléatoire",
     "url_label": "URL",
     "slug_placeholder": "acme",
-    "issue_prefix_label": "Préfixe des tickets",
-    "issue_prefix_prefix": "Les tickets ressembleront à ",
+    "issue_prefix_label": "Préfixe des tâches",
+    "issue_prefix_prefix": "Les tâches ressembleront à ",
     "issue_prefix_suffix": ". Vous pourrez le changer plus tard dans les paramètres.",
-    "issue_prefix_pending": "Définissez l'URL ci-dessus et les numéros de tickets la suivront — ou saisissez un préfixe ici.",
+    "issue_prefix_pending": "Définissez l'URL ci-dessus et les numéros de tâches la suivront — ou saisissez un préfixe ici.",
     "create_new_title": "Créer un espace de travail",
     "create_new_subtitle": "Repartez de zéro — un espace distinct pour une autre facette de votre travail.",
     "hint_opening": "Ouverture de {{name}}.",
@@ -215,7 +216,7 @@
     "empty_lede_prefix": "Un runtime d'agent est un outil de codage IA auquel nous nous connectons — comme ",
     "empty_lede_suffix": ". Installez-en un et actualisez, ou choisissez une option ci-dessous.",
     "empty_skip_title": "Passer pour l'instant",
-    "empty_skip_subtitle": "Entrez dans votre espace de travail maintenant. Votre agent ne pourra pas exécuter de tâches tant qu'aucun runtime d'agent n'est connecté sur cet ordinateur — mais vous pouvez déjà parcourir, planifier et inviter des coéquipiers.",
+    "empty_skip_subtitle": "Entrez dans votre espace de travail maintenant. Votre agent ne pourra pas démarrer d'exécutions tant qu'un runtime d'agent ne sera pas connecté sur cet ordinateur, mais vous pouvez déjà parcourir, planifier et inviter des coéquipiers.",
     "empty_skip_action": "Ignorer",
     "empty_waitlist_title": "Utiliser un ordinateur cloud",
     "empty_waitlist_subtitle": "Nous ferons tourner un ordinateur pour vous dans le cloud. Pas encore actif.",
@@ -268,6 +269,6 @@
     "headline": "Rencontrez Mika, votre premier coéquipier agent.",
     "name": "Mika",
     "role": "Chef de cabinet",
-    "blurb": "Dites à Mika ce que vous voulez faire. Cela devient un ticket, avec le bon agent dessus."
+    "blurb": "Dites à Mika ce que vous voulez faire. Cela devient une tâche, avec le bon agent dessus."
   }
 }

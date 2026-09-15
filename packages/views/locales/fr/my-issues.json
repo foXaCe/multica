@@ -1,26 +1,26 @@
 {
   "page": {
-    "breadcrumb": "Mes tickets",
+    "breadcrumb": "Mes tâches",
     "workspace_fallback": "Espace de travail",
-    "empty_title": "Aucun ticket ne vous est assigné",
-    "empty_description": "Les tickets que vous créez ou qui vous sont assignés apparaîtront ici."
+    "empty_title": "Aucune tâche ne vous est assignée",
+    "empty_description": "Les tâches que vous créez ou qui vous sont assignées apparaîtront ici."
   },
   "header": {
     "scope": {
-      "all_label": "Tous",
-      "all_description": "Qui me sont assignés, que j'ai créés, ou qui impliquent mes agents et mes squads",
-      "assigned_label": "Assignés",
-      "assigned_description": "Tickets qui me sont assignés",
-      "created_label": "Créés",
-      "created_description": "Tickets que j'ai créés",
+      "all_label": "Toutes",
+      "all_description": "Qui me sont assignées, que j'ai créées, ou qui impliquent mes agents et mes squads",
+      "assigned_label": "Assignées",
+      "assigned_description": "Tâches qui me sont assignées",
+      "created_label": "Créées",
+      "created_description": "Tâches que j'ai créées",
       "agents_label": "Mes agents et squads",
-      "agents_description": "Tickets assignés à mes agents"
+      "agents_description": "Tâches assignées à mes agents"
     },
     "filter_button": "Filtrer",
     "filter_status": "Statut",
     "filter_priority": "Priorité",
-    "issue_count_one": "{{count}} ticket",
-    "issue_count_other": "{{count}} tickets",
+    "issue_count_one": "{{count}} tâche",
+    "issue_count_other": "{{count}} tâches",
     "reset_filters": "Réinitialiser tous les filtres",
     "display_settings": "Paramètres d'affichage",
     "grouping": "Regroupement",
@@ -40,6 +40,6 @@
     "sort_manual": "Manuel"
   },
   "errors": {
-    "move_failed": "Échec du déplacement du ticket"
+    "move_failed": "Échec du déplacement de la tâche"
   }
 }

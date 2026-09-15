@@ -8,17 +8,17 @@
   },
   "create_workspace": {
     "title": "Créer un espace de travail",
-    "description": "Les espaces de travail sont des environnements partagés où les équipes travaillent sur des projets et des tickets."
+    "description": "Les espaces de travail sont des environnements partagés où les équipes travaillent sur des projets et des tâches."
   },
   "delete_issue": {
-    "title": "Supprimer le ticket",
-    "description": "Ce ticket et tous ses commentaires seront définitivement supprimés. Cette action est irréversible.",
-    "hint": "Tout membre de l'espace de travail peut supprimer des tickets.",
+    "title": "Supprimer la tâche",
+    "description": "Cette tâche et tous ses commentaires seront définitivement supprimés. Cette action est irréversible.",
+    "hint": "Tout membre de l'espace de travail peut supprimer des tâches.",
     "cancel": "Annuler",
     "confirm": "Supprimer",
     "deleting": "Suppression...",
-    "toast_deleted": "Ticket supprimé",
-    "toast_delete_failed": "Échec de la suppression du ticket"
+    "toast_deleted": "Tâche supprimée",
+    "toast_delete_failed": "Échec de la suppression de la tâche"
   },
   "feedback": {
     "title": "Faire un retour",
@@ -33,36 +33,36 @@
     "github_hint_link": "GitHub"
   },
   "issue_picker": {
-    "search_placeholder": "Rechercher des tickets...",
+    "search_placeholder": "Rechercher des tâches...",
     "searching": "Recherche...",
-    "no_results": "Aucun ticket trouvé.",
-    "prompt_to_search": "Saisissez du texte pour rechercher des tickets"
+    "no_results": "Aucune tâche trouvée.",
+    "prompt_to_search": "Saisissez du texte pour rechercher des tâches"
   },
   "set_parent": {
-    "title": "Définir le ticket parent",
-    "description": "Recherchez un ticket à définir comme parent de ce ticket",
-    "toast_failed": "Échec de la mise à jour du ticket",
-    "toast_success": "{{identifier}} défini comme ticket parent"
+    "title": "Définir la tâche parente",
+    "description": "Recherchez une tâche à définir comme parent de cette tâche",
+    "toast_failed": "Échec de la mise à jour de la tâche",
+    "toast_success": "{{identifier}} définie comme tâche parente"
   },
   "add_child": {
-    "title": "Ajouter un sous-ticket",
-    "description": "Recherchez un ticket à ajouter comme sous-ticket",
-    "toast_failed": "Échec de l'ajout du sous-ticket",
-    "toast_success": "{{identifier}} ajouté comme sous-ticket"
+    "title": "Ajouter une sous-tâche",
+    "description": "Recherchez une tâche à ajouter comme sous-tâche",
+    "toast_failed": "Échec de l'ajout de la sous-tâche",
+    "toast_success": "{{identifier}} ajoutée comme sous-tâche"
   },
   "run_confirm": {
     "title_assign": "Confirmer l'assignation ?",
-    "assign_single": "Assigner ce ticket à {{name}}. Le travail démarrera immédiatement si les conditions d'exécution sont réunies.",
-    "assign_batch": "Assigner {{count}} tickets à {{name}}. Le travail démarrera immédiatement si les conditions d'exécution sont réunies.",
-    "note_label": "Note de passation (facultatif)",
-    "note_placeholder": "Indiquez ce qui compte — périmètre, priorité, ou ce qu'il faut éviter…",
-    "note_unsupported": "Leur runtime est trop ancien pour recevoir cette note de passation ; elle risque de ne pas être lue.",
+    "assign_single": "Assigner cette tâche à {{name}}. Le travail démarrera immédiatement si les conditions d'exécution sont réunies.",
+    "assign_batch": "Assigner {{count}} tâches à {{name}}. Le travail démarrera immédiatement si les conditions d'exécution sont réunies.",
+    "title_promote": "Commencer le travail maintenant ?",
+    "promote_single": "Passer cette tâche à {{status}}. {{name}} commencera immédiatement si les conditions d'exécution sont réunies.",
     "confirm_assign": "Confirmer l'assignation",
+    "confirm_promote": "Déplacer et démarrer",
     "dont_start": "Ne pas démarrer maintenant",
     "toast_failed": "Échec de l'action",
     "create_will_start": "{{name}} commencera à travailler juste après la création.",
     "create_will_start_squad": "Le chef de {{name}} l'examinera et commencera à répartir le travail juste après la création.",
-    "create_parked": "Assigné — ne démarrera pas tant que le ticket est dans À planifier."
+    "create_parked": "Assigné — ne démarrera pas tant que la tâche est dans À planifier."
   },
   "create_squad": {
     "title": "Créer un squad",
@@ -72,11 +72,11 @@
     "description_label": "Description",
     "description_placeholder": "Décrivez ce dont ce squad est responsable...",
     "leader_label": "Agent chef",
-    "leader_hint": "Le chef reçoit toutes les tâches assignées à ce squad et coordonne l'équipe.",
+    "leader_hint": "Le responsable reçoit toutes les tâches assignées à ce squad et coordonne l'équipe.",
     "leader_placeholder": "Sélectionnez un agent chef",
     "members_label": "Membres supplémentaires",
     "members_optional": "(facultatif)",
-    "members_hint": "Membres auxquels le chef peut déléguer des sous-tâches. Peuvent être ajoutés plus tard.",
+    "members_hint": "Membres auxquels le responsable peut déléguer des sous-tâches. Vous pouvez les ajouter plus tard.",
     "members_placeholder": "Ajouter des agents ou des membres de l'espace de travail",
     "members_selected_count_one": "{{count}} sélectionné",
     "members_selected_count_other": "{{count}} sélectionnés",
@@ -101,7 +101,7 @@
     "icon_tooltip": "Choisir une icône",
     "title_placeholder": "Titre du projet",
     "description_placeholder": "Ajouter une description...",
-    "description_hint": "Partagée avec les agents comme contexte pour chaque tâche de ce projet.",
+    "description_hint": "Partagé avec les agents comme contexte à chaque exécution dans ce projet.",
     "lead": "Responsable",
     "no_lead": "Aucun responsable",
     "set_start_date": "Définir la date de début...",
@@ -141,39 +141,65 @@
     "local_hint": "Les agents des autres machines ne verront pas ce chemin — ils ne pourront pas démarrer. Utilisez des dépôts pour le travail partagé."
   },
   "create_issue": {
-    "sr_manual": "Nouveau ticket",
-    "sr_agent": "Création rapide de ticket",
+    "sr_manual": "Nouvelle tâche",
+    "sr_agent": "Création rapide de tâche",
     "manual_breadcrumb": "Créer manuellement",
     "agent_breadcrumb": "Créer avec un agent",
-    "title_placeholder": "Titre du ticket",
+    "title_placeholder": "Titre de la tâche",
     "description_placeholder": "Ajouter une description...",
     "more_options_aria": "Plus d'options",
     "title_required": "Saisissez un titre pour créer",
-    "submit": "Créer le ticket",
+    "submit": "Créer la tâche",
     "submitting": "Création...",
-    "toast_created": "Ticket créé",
-    "view_issue": "Voir le ticket",
-    "toast_failed": "Échec de la création du ticket",
-    "toast_duplicate_title": "Ticket en double",
-    "toast_duplicate_view": "Voir le ticket existant",
-    "toast_link_subissues_all_failed": "Échec de la liaison des sous-tickets",
-    "toast_link_subissues_partial": "Échec de la liaison de {{failed}} sous-tickets sur {{total}}",
+    "toast_created": "Tâche créée",
+    "view_issue": "Voir la tâche",
+    "toast_failed": "Échec de la création de la tâche",
+    "toast_duplicate_title": "Tâche en double",
+    "toast_duplicate_view": "Voir la tâche existante",
+    "issue_limit": {
+      "title": "Cet espace de travail a atteint sa limite de tâches",
+      "checking_description": "Vérification des actions de facturation disponibles pour cet espace de travail…",
+      "upgrade_description": "Passez à Pro pour continuer à créer des tâches.",
+      "portal_description": "Ouvrez le portail de facturation pour gérer l'abonnement de cet espace de travail et rétablir la création de tâches.",
+      "contact_description": "Demandez à un propriétaire ou administrateur de l'espace de travail de passer à Pro.",
+      "billing_description": "Ouvrez Facturation pour voir les options de mise à niveau disponibles pour cet espace de travail.",
+      "billing_unavailable_description": "Impossible de charger les actions de facturation. Ouvrez Facturation pour réessayer.",
+      "billing_disabled_description": "Supprimez une tâche existante pour libérer de la place ou contactez l'administrateur de votre espace de travail.",
+      "upgrade_action": "Passer à Pro",
+      "portal_action": "Ouvrir le portail de facturation",
+      "billing_action": "Voir la facturation"
+    },
+    "autopilot_quota_limit": {
+      "title": "Cet espace de travail a atteint sa limite d'exécutions d'automatisation",
+      "checking_description": "Vérification des actions de facturation disponibles pour cet espace de travail…",
+      "upgrade_description": "Passez à Pro pour rétablir les exécutions d'automatisation.",
+      "portal_description": "Ouvrez le portail de facturation pour gérer l'abonnement de cet espace de travail et rétablir les exécutions d'automatisation.",
+      "contact_description": "Demandez à un propriétaire ou administrateur de l'espace de travail de passer à Pro.",
+      "billing_description": "Ouvrez Facturation pour voir les options de mise à niveau disponibles pour cet espace de travail.",
+      "billing_unavailable_description": "Impossible de charger les actions de facturation. Ouvrez Facturation pour réessayer.",
+      "billing_disabled_description": "Attendez la réinitialisation du quota actuel ou contactez l'administrateur de votre espace de travail.",
+      "upgrade_action": "Passer à Pro",
+      "portal_action": "Ouvrir le portail de facturation",
+      "billing_action": "Voir la facturation"
+    },
+    "toast_link_subissues_all_failed": "Échec de la liaison des sous-tâches",
+    "toast_link_subissues_partial": "Échec de la liaison de {{failed}} sous-tâches sur {{total}}",
     "toast_link_labels_failed": "Échec du rattachement des étiquettes",
     "toast_set_properties_failed": "Impossible de définir {{count}} valeurs de propriétés personnalisées",
     "switch_to_agent": "Passer en mode agent",
-    "switch_to_agent_tooltip": "Passer à la création avec un agent — décrivez en une ligne et laissez l'agent rédiger le ticket",
+    "switch_to_agent_tooltip": "Passer à la création avec un agent — décrivez en une ligne et laissez l'agent rédiger la tâche",
     "switch_to_manual": "Passer en mode manuel",
     "switch_to_manual_tooltip": "Passer à la création manuelle — remplissez les champs vous-même",
     "create_another": "En créer un autre",
     "remove_parent_aria": "Retirer le parent",
-    "remove_subissue_aria": "Retirer le sous-ticket {{identifier}}",
-    "subissue_of": "Sous-ticket de {{identifier}}",
-    "subissue_chip": "Sous-ticket : {{identifier}}",
+    "remove_subissue_aria": "Retirer la sous-tâche {{identifier}}",
+    "subissue_of": "Sous-tâche de {{identifier}}",
+    "subissue_chip": "Sous-tâche : {{identifier}}",
     "parent_with_id": "Parent : {{identifier}}",
     "set_due_date": "Définir la date d'échéance...",
     "set_start_date": "Définir la date de début...",
-    "set_parent": "Définir le ticket parent...",
-    "add_subissue": "Ajouter un sous-ticket...",
+    "set_parent": "Définir la tâche parente...",
+    "add_subissue": "Ajouter une sous-tâche...",
     "set_status": "Définir le statut...",
     "set_priority": "Définir la priorité...",
     "set_assignee": "Définir l'assigné...",
@@ -183,12 +209,12 @@
     "custom_properties": "Propriétés personnalisées",
     "remove_parent": "Retirer le parent",
     "set_parent_picker": {
-      "title": "Définir le ticket parent",
-      "description": "Recherchez un ticket à définir comme parent du nouveau ticket"
+      "title": "Définir la tâche parente",
+      "description": "Recherchez une tâche à définir comme parent de la nouvelle tâche"
     },
     "add_subissue_picker": {
-      "title": "Ajouter un sous-ticket",
-      "description": "Recherchez un ticket à ajouter comme sous-ticket du nouveau ticket"
+      "title": "Ajouter une sous-tâche",
+      "description": "Recherchez une tâche à ajouter comme sous-tâche de la nouvelle tâche"
     },
     "agent": {
       "created_by": "Créé par",
@@ -201,6 +227,7 @@
       "version_missing": "Le daemon de cet agent ne communique pas de version du CLI. La création avec un agent exige le CLI multica ≥ {{min}}. Mettez le daemon à jour et reconnectez-vous, ou passez à la création manuelle.",
       "version_below": "Le CLI du daemon de cet agent est en {{current}} — la création avec un agent exige ≥ {{min}}. Mettez le daemon à jour, ou passez à la création manuelle.",
       "prompt_placeholder": "Dites à l'agent quoi faire, par exemple « confier à Bohan la lenteur de chargement de la boîte de réception dans le projet Web »",
+      "source_context_prompt_placeholder": "Indiquez à l'agent quoi faire de ce contexte, par exemple « poursuivez l'enquête et corrigez le problème décrit ici »",
       "more_fields_aria": "Plus de champs",
       "set_project": "Définir le projet...",
       "set_priority": "Définir la priorité...",
@@ -216,7 +243,7 @@
       "error_agent_unavailable_fallback": "L'agent est indisponible. Choisissez-en un autre.",
       "error_daemon_version": "Le CLI du daemon de cet agent ({{current}}) est inférieur au minimum requis {{min}}. Mettez le daemon à jour pour utiliser la création avec un agent.",
       "error_unknown": "Échec de l'envoi. Réessayez.",
-      "sub_issue_of": "Sous-ticket de {{identifier}}"
+      "sub_issue_of": "Sous-tâche de {{identifier}}"
     }
   }
 }

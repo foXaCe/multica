@@ -18,7 +18,7 @@
     "back": "Retour",
     "log_out": "Se déconnecter",
     "title": "Bienvenue sur Multica",
-    "description": "Un espace de travail unique où vos coéquipiers IA et vous travaillez côte à côte — ils prennent des tickets, laissent des commentaires et partagent le même contexte.",
+    "description": "Un espace de travail unique où vos coéquipiers IA et vous travaillez côte à côte — ils prennent des tâches, laissent des commentaires et partagent le même contexte.",
     "invite_hint": "Vous pourrez inviter des coéquipiers une fois votre espace de travail prêt."
   },
   "creation_disabled": {

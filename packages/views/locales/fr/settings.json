@@ -1,7 +1,92 @@
 {
+  "issue_statuses": {
+    "title": "États des tâches",
+    "description": "Organisez les statuts des tâches en quatre catégories de cycle de vie.",
+    "loading": "Chargement des états…",
+    "add": "Ajouter un état",
+    "show_archived": "Afficher les archivés ({{count}})",
+    "archived_badge": "Archivé",
+    "archived_hint": "Retiré des nouvelles affectations. Les tâches qui le portent le gardent.",
+    "reorder_failed": "Le nouvel ordre n'a pas pu être enregistré.",
+    "actions": {
+      "move_up": "Monter",
+      "move_down": "Descendre",
+      "open": "Actions pour {{name}}",
+      "edit": "Modifier",
+      "archive": "Archiver",
+      "reorder": "Réordonner {{name}}"
+    },
+    "reorder_hint": "Faites glisser les statuts dans une catégorie pour définir leur ordre dans les tableaux, les listes et les menus de statut.",
+    "built_in_dialog": {
+      "title": "Ce statut intégré ne peut pas être modifié",
+      "description": "Les statuts intégrés sont utilisés par Multica et ne peuvent être ni modifiés ni archivés. Vous pouvez toutefois changer leur ordre dans la catégorie.",
+      "confirm": "Compris"
+    },
+    "editor": {
+      "create_title": "Nouvel état",
+      "edit_title": "Modifier l'état",
+      "name": "Nom",
+      "name_placeholder": "ex. Relecture de code",
+      "key_hint": "Désigné par {{key}} dans l'API et la CLI.",
+      "created": "Statut créé. L'API et le CLI le désignent par {{key}}.",
+      "category": "Catégorie",
+      "category_locked": "La catégorie ne peut plus être modifiée après la création du statut.",
+      "description": "Description",
+      "description_placeholder": "Ce que cet état signifie pour votre équipe",
+      "color": "Couleur",
+      "icon": "Forme de l'icône",
+      "icon_shapes": {
+        "default": "Par défaut",
+        "dotted": "Cercle pointillé",
+        "circle": "Cercle",
+        "half": "Cercle à moitié rempli",
+        "three_quarters": "Cercle rempli aux trois quarts",
+        "check": "Coche",
+        "slash": "Barre oblique",
+        "cross": "Croix"
+      },
+      "cancel": "Annuler",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…",
+      "save_failed": "L'état n'a pas pu être enregistré."
+    },
+    "archive_dialog": {
+      "retry": "Réessayer l'archivage",
+      "title": "Archiver cet état ?",
+      "description": "Déplacez toutes les tâches hors de « {{name}} » avant de l'archiver. Une fois vide, ce statut disparaîtra des tableaux et des sélecteurs de statut.",
+      "in_use_title": "Déplacer les tâches avant l'archivage",
+      "in_use": "Tâches utilisant encore ce statut : {{count}}. Déplacez-les vers un autre statut, y compris les tâches terminées et annulées, puis réessayez.",
+      "view_issues": "Voir les tâches",
+      "archiving": "Archivage...",
+      "cancel": "Annuler",
+      "confirm": "Archiver",
+      "failed": "L'état n'a pas pu être archivé."
+    },
+    "category_labels": {
+      "unstarted": "Non démarré",
+      "started": "Démarrage",
+      "done": "Terminé",
+      "closed": "Fermée"
+    },
+    "categories": {
+      "unstarted": "Travail non démarré, qu'il soit planifié ou dans le backlog.",
+      "started": "Travail en cours, en relecture ou bloqué.",
+      "done": "Travail terminé.",
+      "closed": "Travail qui ne sera pas terminé."
+    },
+    "built_in_descriptions": {
+      "backlog": "En attente. Affecter une tâche ici ne démarre jamais un agent.",
+      "todo": "En file. Déplacer une tâche ici démarre l'agent qui lui est affecté.",
+      "in_progress": "En cours de traitement.",
+      "in_review": "Livré, en attente d'une relecture humaine. Clôt l'exécution de l'autopilote.",
+      "blocked": "À l'arrêt, en attente d'une dépendance extérieure.",
+      "done": "Terminé.",
+      "cancelled": "Abandonné."
+    }
+  },
   "quick_actions": {
     "title": "Actions rapides",
-    "description": "Préparez une fois un agent et une invite, puis déclenchez-les d'un clic depuis la barre latérale de n'importe quel ticket.",
+    "description": "Préparez une fois un agent et une invite, puis déclenchez-les d'un clic depuis la barre latérale de n'importe quel tâche.",
     "add": "Nouvelle action rapide",
     "search_placeholder": "Rechercher des actions rapides",
     "loading": "Chargement des actions rapides…",
@@ -35,16 +120,16 @@
     "used_count": "Utilisée {{count}}×",
     "create_title": "Nouvelle action rapide",
     "edit_title": "Modifier l'action rapide",
-    "dialog_description": "S'exécute comme un commentaire sur le ticket, à la manière d'une @mention.",
+    "dialog_description": "S'exécute comme un commentaire sur la tâche, à la manière d'une @mention.",
     "field_name": "Nom",
     "field_name_placeholder": "Relecture de code",
     "field_target": "S'exécute en tant que",
     "field_prompt": "Invite",
-    "field_prompt_placeholder": "Relire le code lié à ce ticket. Se concentrer sur la justesse et les cas limites.",
-    "prompt_hint": "Envoyée telle quelle. L'agent voit déjà le ticket.",
-    "template_not_supported": "Les variables ne sont pas encore prises en charge — retirez {{token}}. L'agent lit déjà ce ticket.",
+    "field_prompt_placeholder": "Relire le code lié à cette tâche. Se concentrer sur la justesse et les cas limites.",
+    "prompt_hint": "Envoyée telle quelle. L'agent voit déjà la tâche.",
+    "template_not_supported": "Les variables ne sont pas encore prises en charge — retirez {{token}}. L'agent lit déjà cette tâche.",
     "delete_title": "Supprimer cette action rapide ?",
-    "delete_description": "Elle disparaît de la barre latérale de tous les tickets. Les exécutions passées restent dans le journal d'exécution. Archivez-la plutôt si vous pensez la réutiliser."
+    "delete_description": "Elle disparaît de la barre latérale de toutes les tâches. Les exécutions passées restent dans le journal d'exécution. Archivez-la plutôt si vous pensez la réutiliser."
   },
   "auto_save": {
     "saving": "Enregistrement…",
@@ -77,8 +162,13 @@
     },
     "sticky_comment_bar": {
       "title": "Barre de commentaire fixe",
-      "hint": "Garder la barre de commentaire ancrée en bas pendant le défilement d'un ticket."
-    }
+      "hint": "Garder la barre de commentaire ancrée en bas pendant le défilement d'une tâche."
+    },
+    "description": "Personnalisez votre façon de travailler dans Multica.",
+    "issue_title": "Création de tâches",
+    "comments_title": "Commentaires",
+    "device_hint": "Enregistré sur cet appareil.",
+    "issue_scope": "Ces préférences s'appliquent à cet espace de travail sur cet appareil. Elles modifient uniquement les champs visibles lors de la création d'une tâche."
   },
   "shortcuts": {
     "title": "Raccourcis clavier",
@@ -115,24 +205,24 @@
         "description": "Rechercher et exécuter des commandes depuis n'importe où."
       },
       "createIssue": {
-        "label": "Créer un ticket",
-        "description": "Ouvrir votre mode de création de ticket préféré."
+        "label": "Créer une tâche",
+        "description": "Ouvrir votre mode de création de tâche préféré."
       },
       "toggleSidebar": {
-        "label": "Afficher ou masquer la barre latérale",
-        "description": "Afficher ou masquer la barre latérale principale."
+        "label": "Afficher ou masquer la barre latérale gauche",
+        "description": "Afficher ou masquer la barre latérale gauche."
+      },
+      "toggleRightSidebar": {
+        "label": "Afficher ou masquer la barre latérale droite",
+        "description": "Afficher ou masquer la barre latérale droite lorsque la page en possède une."
       },
       "toggleChat": {
         "label": "Afficher ou masquer la fenêtre de discussion",
         "description": "Ouvrir ou fermer la fenêtre de discussion flottante. À l'ouverture, le champ de message reçoit le focus."
       },
       "findInIssue": {
-        "label": "Rechercher dans le ticket",
-        "description": "Rechercher dans le ticket ouvert."
-      },
-      "openThreadNav": {
-        "label": "Ouvrir le navigateur de fils",
-        "description": "Lister, rechercher et parcourir les fils de commentaires du ticket ouvert."
+        "label": "Rechercher dans la tâche",
+        "description": "Rechercher dans la tâche ouverte."
       },
       "archiveInboxItem": {
         "label": "Archiver la notification",
@@ -140,7 +230,7 @@
       },
       "send": {
         "label": "Envoyer",
-        "description": "Envoyer messages de discussion, commentaires, réponses, retours et invites, et créer des tickets dans la fenêtre de création."
+        "description": "Envoyer messages de discussion, commentaires, réponses, retours et invites, et créer des tâches dans la fenêtre de création."
       },
       "goBack": {
         "label": "Revenir en arrière",
@@ -159,12 +249,12 @@
         "description": "Ouvrir les discussions de l'espace de travail."
       },
       "goMyIssues": {
-        "label": "Aller à Mes tickets",
-        "description": "Ouvrir les tickets qui vous sont assignés."
+        "label": "Aller à Mes tâches",
+        "description": "Ouvrir les tâches qui vous sont assignées."
       },
       "goIssues": {
-        "label": "Aller aux tickets",
-        "description": "Ouvrir la liste des tickets."
+        "label": "Aller aux tâches",
+        "description": "Ouvrir la liste des tâches."
       },
       "goProjects": {
         "label": "Aller aux projets",
@@ -204,6 +294,8 @@
       "description": "Les raccourcis de fenêtre et d'accessibilité restent fixes pour rester fiables. Les commandes de zoom et d'onglets concernent l'application de bureau.",
       "open_settings": "Ouvrir les paramètres",
       "close_tab": "Fermer l'onglet actif",
+      "select_tab_1_to_8": "Sélectionner l'onglet 1 à 8",
+      "select_last_tab": "Sélectionner le dernier onglet",
       "zoom_in": "Zoom avant",
       "zoom_out": "Zoom arrière",
       "reset_zoom": "Réinitialiser le zoom",
@@ -235,22 +327,32 @@
     "title": "MCP",
     "description": "Une bibliothèque de serveurs MCP pour cet espace de travail. En ajouter un ici ne le donne à aucun agent — le propriétaire d'un agent l'assigne depuis l'onglet MCP de cet agent, où il dispose aussi d'un interrupteur propre à l'agent.",
     "servers_title": "Serveurs partagés",
-    "write_only_note": "Les configurations enregistrées sont en écriture seule — les URL, commandes, en-têtes et valeurs d'environnement ne sont plus jamais affichés, de sorte que modifier un serveur remplace sa configuration. Le renommage est sans risque : les agents conservent leur assignation.",
+    "write_only_note": "Pour votre sécurité, les URL, commandes, en-têtes et valeurs d'environnement enregistrés ne sont plus affichés. Pour les modifier, saisissez une nouvelle configuration complète. Renommer conserve la configuration et les assignations aux agents.",
     "add_server": "Ajouter un serveur",
-    "edit_server": "Modifier le serveur",
+    "rename_server": "Renommer le serveur",
+    "rename_action": "Renommer",
+    "replace_config": "Remplacer la configuration",
+    "rename_save": "Enregistrer le nom",
+    "rename_cancel": "Annuler le renommage",
+    "rename_required": "Saisissez un nom de serveur.",
+    "rename_invalid": "Utilisez uniquement des lettres, des chiffres, des traits d'union et des tirets bas.",
+    "rename_duplicate": "Un serveur portant ce nom existe déjà.",
     "remove_server": "Retirer le serveur",
+    "remove_action": "Supprimer",
     "empty_title": "Aucun serveur MCP partagé",
     "empty_description": "Ajoutez un serveur ici, puis assignez-le aux agents qui doivent l'utiliser depuis leur propre onglet MCP.",
     "disabled_badge": "Désactivé",
     "admin_only_note": "Seuls les propriétaires et administrateurs de l'espace de travail peuvent modifier les serveurs MCP partagés.",
     "delete_title": "Retirer le serveur partagé ?",
-    "delete_description": "{{name}} sera retiré de la bibliothèque et de tous les agents auxquels il est assigné, avec effet à leur prochaine tâche.",
+    "delete_description": "{{name}} sera retiré de la bibliothèque et de tous les agents auxquels il est assigné, à partir de leur prochaine exécution.",
     "delete_confirm": "Retirer",
     "cancel": "Annuler",
     "added_toast": "Serveur MCP partagé ajouté",
     "updated_toast": "Serveur MCP partagé mis à jour",
+    "renamed_toast": "Serveur MCP partagé renommé",
     "removed_toast": "Serveur MCP partagé retiré",
     "save_failed_toast": "Impossible d'enregistrer le serveur MCP partagé",
+    "rename_failed_toast": "Impossible de renommer le serveur MCP partagé",
     "remove_failed_toast": "Impossible de retirer le serveur MCP partagé"
   },
   "page": {
@@ -261,7 +363,7 @@
       "profile": "Profil",
       "preferences": "Préférences",
       "shortcuts": "Raccourcis",
-      "issue": "Ticket",
+      "issue": "Tâche",
       "chat": "Discussion",
       "notifications": "Notifications",
       "tokens": "Jetons d'API",
@@ -272,55 +374,71 @@
       "labs": "Labo",
       "members": "Membres",
       "labels": "Étiquettes",
+      "issue_statuses": "États des tâches",
       "properties": "Propriétés",
       "quick_actions": "Actions rapides",
       "plugins": "Plugins",
       "mcp": "MCP",
-      "billing": "Facturation",
-      "issue_statuses": "États des tickets"
-    }
+      "billing": "Facturation"
+    },
+    "groups": {
+      "personal": "Personnel",
+      "workspace": "Espace de travail",
+      "issues": "Configuration des tâches",
+      "connections": "Connexions et extensions",
+      "device": "Application de bureau"
+    },
+    "navigate": "Aller aux paramètres",
+    "device_scope": "Cet appareil"
   },
   "plugins": {
     "title": "Plugins",
-    "description": "Examinez, installez, cadrez et gérez les capacités signées livrées par Multica.",
+    "description": "Publiez des plugins dans cet espace de travail, puis installez une version précise et vérifiez exactement les accès autorisés.",
     "loading": "Chargement des plugins",
     "load_failed": "Impossible de charger les plugins",
     "load_failed_description": "Réessayez. Les plugins déjà activés et les exécutions épinglées ne sont pas affectés.",
     "read_only": "Accès en lecture seule",
     "read_only_description": "Les propriétaires et administrateurs de l'espace de travail peuvent installer ou modifier les rattachements de plugins.",
     "empty": "Aucun plugin intégré disponible.",
-    "install": {
-      "title": "Installer un plugin",
-      "description": "Collez l'URL d'un manifeste de plugin. Vous verrez ce qu'il demande avant que quoi que ce soit ne soit installé.",
-      "placeholder": "https://exemple.com/multica.plugin.json",
-      "review": "Examiner"
-    },
+    "action_failed": "Échec de l'action sur le plugin",
     "enabled": "Portée du plugin activée",
     "disabled": "Plugin désactivé pour les nouvelles tâches",
-    "source": "Source et déposant",
+    "enabled_label": "Activer le plugin",
     "uninstall": "Désinstaller",
     "uninstalled": "Plugin désinstallé pour les exécutions futures",
-    "action_failed": "Échec de l'action sur le plugin",
-    "states": {
-      "disabled": "Désactivé"
-    },
-    "enabled_label": "Activer le plugin",
     "granted_scopes": "Accès accordés",
     "contributes": "Apporte",
     "version": "v{{version}}",
     "byline": "{{author}} · v{{version}}",
+    "states": {
+      "disabled": "Désactivé"
+    },
     "installed": {
       "title": "Installés"
     },
     "consent": {
       "title": "Ce plugin demande les accès suivants",
-      "description": "Multica n'exécute jamais le code d'un plugin sur ses serveurs. Un plugin ne peut faire que ce que ces accès autorisent, et jamais plus que la personne qui l'utilise.",
+      "description": "Vous approuvez une version précise. Son code est stocké par Multica et ne changera pas avant une mise à niveau. Un plugin ne peut agir que dans les limites de ces autorisations, sans jamais dépasser les droits de la personne qui l'utilise.",
       "cancel": "Annuler",
       "confirm": "Accorder et installer",
       "confirm_upgrade": "Accorder et mettre à jour",
       "installed": "Plugin installé",
       "upgrade_from": " · mise à jour depuis la v{{version}}",
       "new_scope": "Nouveau"
+    },
+    "schedule": {
+      "title": "Planifications automatiques",
+      "consent_title": "Ce plugin exécutera des hooks automatiquement",
+      "consent_description": "L'installation ou la mise à niveau active ces planifications. Si plusieurs échéances sont manquées, seule la dernière exécution due est transmise.",
+      "next_run": "Prochaine : {{time}}",
+      "activity_title": "Envois récents",
+      "activity_last": "{{status}} · prévu {{planned}} · envoyé {{actual}} · tentative {{attempt}}",
+      "activity_empty": "Pas encore envoyé",
+      "frequency_minutes_one": "Toutes les minutes",
+      "frequency_minutes_other": "Toutes les {{count}} minutes",
+      "frequency_hourly": "Chaque heure à la minute {{minute}}",
+      "frequency_daily": "Chaque jour à {{hour}}:{{minute}}",
+      "frequency_custom": "Planification récurrente personnalisée"
     },
     "config": {
       "title": "Configuration",
@@ -329,12 +447,12 @@
       "secret_set": "Enregistré — saisissez une nouvelle valeur pour la remplacer"
     },
     "scopes": {
-      "issues_read": "Lire les tickets",
-      "issues_write": "Créer et modifier des tickets",
+      "issues_read": "Lire les tâches",
+      "issues_write": "Créer et modifier des tâches",
       "comments_read": "Lire les commentaires",
       "comments_write": "Publier des commentaires",
-      "tasks_read": "Lire les tâches des agents",
-      "tasks_write": "Démarrer et mettre à jour des tâches d'agent",
+      "tasks_read": "Lire les exécutions des agents",
+      "tasks_write": "Démarrer et mettre à jour les exécutions des agents",
       "agents_read": "Lire la liste des agents",
       "members_read": "Lire la liste des membres",
       "storage_user": "Stocker des données pour chaque membre séparément",
@@ -343,11 +461,34 @@
       "unknown": "Accès non reconnu — ne pas installer"
     },
     "hook_circuit_open": "La distribution des hooks est arrêtée après des échecs répétés.",
-    "hook_recent_failures": "{{count}} appels de hook récents ont échoué."
+    "hook_recent_failures": "{{count}} appels de hook récents ont échoué.",
+    "mcp": {
+      "badge": "MCP",
+      "description": "Ce hook intègre des outils du serveur MCP de l'auteur du plugin. Approuvez ceux que les agents peuvent appeler : tout nouvel outil devra être approuvé avant son intégration.",
+      "loading": "Chargement des outils",
+      "unreachable": "Impossible de joindre le serveur MCP du plugin.",
+      "empty": "Ce serveur MCP ne propose actuellement aucun outil.",
+      "drifted": "Schéma modifié",
+      "save": "Enregistrer les approbations",
+      "approved": "Outils approuvés mis à jour."
+    },
+    "publish": {
+      "title": "Publier un plugin",
+      "description": "Envoyez un paquet de plugin. Multica le stocke et le distribue : l'auteur du plugin n'a pas besoin de son propre serveur.",
+      "hint": "Un fichier .zip contenant multica.plugin.json et tous les fichiers qu'il référence.",
+      "upload": "Envoyer le paquet",
+      "published": "{{name}} {{version}} publié",
+      "empty": "Rien n'a encore été publié dans cet espace de travail.",
+      "delete": "Supprimer le plugin publié",
+      "deleted": "Plugin publié supprimé",
+      "installed_version": "Utilisés",
+      "review_install": "Vérifier et installer",
+      "review_upgrade": "Vérifier et mettre à niveau"
+    }
   },
   "properties": {
     "title": "Propriétés",
-    "description": "Définissez des propriétés personnalisées typées pour les tickets de cet espace de travail. Les valeurs se définissent sur chaque ticket et sont lisibles et modifiables par les agents.",
+    "description": "Définissez des propriétés personnalisées typées pour les tâches de cet espace de travail. Les valeurs se définissent sur chaque tâche et sont lisibles et modifiables par les agents.",
     "search_placeholder": "Filtrer par nom...",
     "new_property": "Nouvelle propriété",
     "show_archived": "Afficher les archivées",
@@ -358,8 +499,8 @@
       "usage": "Utilisée par",
       "updated": "Mise à jour"
     },
-    "usage_count_one": "{{count}} ticket",
-    "usage_count_other": "{{count}} tickets",
+    "usage_count_one": "{{count}} tâche",
+    "usage_count_other": "{{count}} tâches",
     "loading": "Chargement des propriétés...",
     "empty": "Aucune propriété pour l'instant",
     "empty_hint": "Créez des champs typés comme Gravité ou Environnement — les agents peuvent les lire et les écrire avec validation.",
@@ -407,7 +548,7 @@
     },
     "archive_dialog": {
       "title": "Archiver la propriété ?",
-      "description": "« {{name}} » sera masquée des sélecteurs et des filtres. Les valeurs existantes sur les tickets sont conservées. Vous pourrez la restaurer plus tard.",
+      "description": "« {{name}} » sera masquée des sélecteurs et des filtres. Les valeurs existantes sur les tâches sont conservées. Vous pourrez la restaurer plus tard.",
       "cancel": "Annuler",
       "confirm": "Archiver la propriété",
       "failed": "Impossible d'archiver la propriété"
@@ -415,9 +556,9 @@
   },
   "labels": {
     "title": "Étiquettes",
-    "description": "Gérez les catalogues d'étiquettes distincts servant à organiser les tickets et les skills de cet espace de travail.",
+    "description": "Gérez les catalogues d'étiquettes distincts servant à organiser les tâches et les skills de cet espace de travail.",
     "scopes": {
-      "issue": "Tickets",
+      "issue": "Tâches",
       "skill": "Skills"
     },
     "search_placeholder": "Filtrer par nom ou description...",
@@ -477,20 +618,20 @@
   },
   "notifications": {
     "title": "Notifications de la boîte de réception",
-    "description": "Choisissez quels événements génèrent des notifications dans la boîte de réception. Les types d'événements coupés sont filtrés silencieusement — vous pouvez toujours les voir en ouvrant directement le ticket.",
+    "description": "Choisissez quels événements génèrent des notifications dans la boîte de réception. Les types d'événements coupés sont filtrés silencieusement — vous pouvez toujours les voir en ouvrant directement la tâche.",
     "toast_failed": "Échec de la mise à jour des réglages de notification",
     "groups": {
       "assignments": {
         "label": "Assignations",
-        "description": "Quand un ticket vous est assigné ou retiré"
+        "description": "Quand une tâche vous est assignée ou retirée"
       },
       "status_changes": {
         "label": "Changements de statut",
-        "description": "Quand un ticket que vous suivez change de statut (à faire, en cours, terminé…)"
+        "description": "Quand une tâche que vous suivez change de statut (à faire, en cours, terminé…)"
       },
       "comments": {
         "label": "Commentaires",
-        "description": "Nouveaux commentaires sur les tickets que vous suivez"
+        "description": "Nouveaux commentaires sur les tâches que vous suivez"
       },
       "mentions": {
         "label": "Mentions",
@@ -498,11 +639,11 @@
       },
       "updates": {
         "label": "Priorité et date d'échéance",
-        "description": "Quand la priorité ou la date d'échéance change sur les tickets que vous suivez"
+        "description": "Quand la priorité ou la date d'échéance change sur les tâches que vous suivez"
       },
       "agent_activity": {
         "label": "Activité des agents",
-        "description": "Quand une tâche d'agent se termine ou échoue"
+        "description": "Lorsqu'une exécution d'agent se termine ou échoue"
       }
     },
     "system": {
@@ -576,10 +717,10 @@
     "context_label": "Contexte",
     "context_placeholder": "Informations générales et contexte pour les agents IA travaillant dans cet espace de travail",
     "slug_label": "Identifiant d'URL",
-    "issue_prefix_label": "Préfixe des tickets",
-    "issue_prefix_hint": "Utilisé dans les numéros de tickets, par exemple {{example}}.",
-    "prefix_confirm_title": "Changer le préfixe des tickets ?",
-    "prefix_confirm_description": "Tous les tickets seront renumérotés de {{oldPrefix}}-N vers {{newPrefix}}-N. Les références externes — titres de pull requests, noms de branches, liens dans la documentation et les discussions — qui utilisent {{oldPrefix}}-N cesseront de fonctionner.",
+    "issue_prefix_label": "Préfixe des tâches",
+    "issue_prefix_hint": "Utilisé dans les numéros de tâches, par exemple {{example}}.",
+    "prefix_confirm_title": "Changer le préfixe des tâches ?",
+    "prefix_confirm_description": "Toutes les tâches seront renumérotées de {{oldPrefix}}-N vers {{newPrefix}}-N. Les références externes — titres de pull requests, noms de branches, liens dans la documentation et les discussions — qui utilisent {{oldPrefix}}-N cesseront de fonctionner.",
     "save": "Enregistrer",
     "saving": "Enregistrement...",
     "manage_hint": "Seuls les administrateurs et les propriétaires peuvent modifier les paramètres de l'espace de travail.",
@@ -605,7 +746,7 @@
   },
   "delete_workspace_dialog": {
     "title": "Supprimer l'espace de travail",
-    "description": "Cette action est irréversible. Tous les tickets, agents et données seront définitivement supprimés.",
+    "description": "Cette action est irréversible. Toutes les tâches, tous les agents, toutes les discussions et tout l'historique des exécutions seront définitivement supprimés.",
     "type_to_confirm_prefix": "Pour confirmer, saisissez",
     "type_to_confirm_suffix": " ci-dessous.",
     "cancel": "Annuler",
@@ -624,8 +765,8 @@
     "master_description_off": "Les fonctions GitHub sont désactivées. La barre latérale des PR, la mention de co-auteur et la liaison automatique sont en pause. Les données côté serveur ne sont pas supprimées.",
     "section_connection": "Connexion",
     "connection_title": "GitHub App",
-    "connection_description_prefix": "Liez automatiquement les tickets aux pull requests. Lorsqu'une PR comportant",
-    "connection_description_suffix": "dans sa branche, son titre ou son corps est fusionnée, le ticket correspondant passe à",
+    "connection_description_prefix": "Associez automatiquement les tâches aux pull requests. Une PR est associée lorsque",
+    "connection_description_suffix": "figure dans le nom de sa branche ou son titre, ou que sa description contient Closes MUL-123. Fusionner une PR contenant ce mot-clé de clôture fait également passer la tâche à",
     "connection_description_done": "Terminé",
     "connection_identifier_example": "MUL-123",
     "connected_to": "Connecté à {{login}}",
@@ -649,12 +790,12 @@
     "toast_disconnected": "GitHub App déconnectée",
     "section_features": "Fonctions",
     "feature_pr_sidebar_label": "Barre latérale des pull requests",
-    "feature_pr_sidebar_description": "Afficher les pull requests liées dans la barre latérale du ticket.",
+    "feature_pr_sidebar_description": "Afficher les pull requests liées dans la barre latérale de la tâche.",
     "feature_co_author_label": "Mention Co-authored-by",
     "feature_co_author_description_prefix": "Ajouter",
     "feature_co_author_description_suffix": "aux commits rédigés par des agents.",
-    "feature_auto_link_label": "Lier automatiquement tickets et PR",
-    "feature_auto_link_description": "Comparer les titres, corps et noms de branches des PR aux identifiants de tickets, et créer le lien automatiquement.",
+    "feature_auto_link_label": "Lier automatiquement tâches et PR",
+    "feature_auto_link_description": "Recherchez les identifiants de tâche dans les titres et noms de branche des PR, ainsi qu'après un mot-clé de clôture dans leur description, pour créer automatiquement l'association.",
     "section_repositories": "Dépôts",
     "repositories_shortcut_label": "Les URL de dépôts se trouvent dans l'onglet Dépôts",
     "repositories_shortcut_link": "Gérer les dépôts →",
@@ -662,7 +803,7 @@
   },
   "vcs": {
     "section_title": "Fournisseurs git (auto-hébergés)",
-    "page_description": "Connectez une instance auto-hébergée de Forgejo, Gitea ou GitLab pour refléter les pull requests sur les tickets. Chaque connexion utilise un jeton d'accès ; les agents poussent leurs branches et ouvrent les PR avec les identifiants git propres au runtime.",
+    "page_description": "Connectez une instance auto-hébergée de Forgejo, Gitea ou GitLab pour refléter les pull requests sur les tâches. Chaque connexion utilise un jeton d'accès ; les agents poussent leurs branches et ouvrent les PR avec les identifiants git propres au runtime.",
     "connect_title": "Connecter une instance de fournisseur",
     "connected_as": "Connecté en tant que {{login}}",
     "form_provider_label": "Fournisseur",
@@ -685,7 +826,7 @@
     "copied": "Copié dans le presse-papiers",
     "copy_failed": "Impossible de copier",
     "disconnect_confirm_title": "Déconnecter ce fournisseur ?",
-    "disconnect_confirm_description": "Les pull requests reflétées et leurs liens vers les tickets pour cette connexion seront supprimés. Cette action est irréversible.",
+    "disconnect_confirm_description": "Les pull requests reflétées et leurs liens vers les tâches pour cette connexion seront supprimés. Cette action est irréversible.",
     "disconnect_confirm_cancel": "Annuler",
     "disconnect_confirm_action": "Déconnecter",
     "toast_connected": "Fournisseur connecté",
@@ -703,7 +844,7 @@
   },
   "lark": {
     "section_title": "Lark",
-    "page_description": "Connectez chaque agent Multica à un bot PersonalAgent Lark (飞书). Les membres peuvent lui écrire en privé, le mentionner dans des groupes, et taper /issue pour créer un ticket Multica.",
+    "page_description": "Connectez chaque agent Multica à un bot PersonalAgent Lark (飞书). Les membres peuvent lui écrire en privé, le mentionner dans des groupes, et taper /issue pour créer une tâche Multica.",
     "not_enabled_title": "Intégration Lark non activée",
     "not_enabled_description_prefix": "Définissez",
     "not_enabled_description_suffix": "sur le serveur pour permettre l'installation de bots Lark.",
@@ -808,7 +949,7 @@
   },
   "slack": {
     "section_title": "Slack",
-    "page_description": "Connectez chaque agent Multica à son propre bot Slack. Les membres peuvent lui écrire en privé, le @mentionner dans un canal, et taper /issue pour créer un ticket Multica.",
+    "page_description": "Connectez chaque agent Multica à son propre bot Slack. Les membres peuvent lui écrire en privé, le @mentionner dans un canal, et taper /issue pour créer une tâche Multica.",
     "not_enabled_title": "Intégration Slack non activée",
     "not_enabled_description_prefix": "Définissez",
     "not_enabled_description_suffix": "sur le serveur pour permettre l'installation de bots Slack.",
@@ -851,29 +992,40 @@
   },
   "dingtalk": {
     "section_title": "DingTalk",
-    "page_description": "Connectez un robot DingTalk à Multica. Les messages privés utilisent son agent par défaut ; chaque groupe peut router ce même robot vers un agent différent.",
-    "group_routes_title": "Routage par groupe",
-    "group_routes_description": "Ajoutez ce robot à plusieurs groupes DingTalk, puis @mentionnez-le une fois dans chacun. Multica détecte le groupe automatiquement et route les messages suivants vers l'agent sélectionné ici.",
-    "group_routes_empty_title": "Aucun groupe détecté pour l'instant",
-    "group_routes_empty_description": "Ajoutez le robot connecté à un groupe DingTalk et @mentionnez-le une fois. Le groupe apparaîtra ici automatiquement.",
-    "group_routes_error_title": "Impossible de charger les routages de groupe",
-    "group_routes_error_description": "L'actualisation automatique est suspendue. Vérifiez le serveur et réessayez.",
-    "group_routes_retry": "Réessayer",
-    "group_routes_agents_loading": "Chargement des agents pour le routage par groupe…",
-    "group_routes_agents_empty_title": "Aucun agent éligible",
-    "group_routes_agents_empty_description": "Créez ou restaurez un agent avant de réassigner des groupes DingTalk.",
-    "group_routes_agents_error_title": "Impossible de charger les agents",
-    "group_routes_agents_error_description": "La réassignation de groupe est indisponible tant que la liste des agents n'est pas chargée.",
-    "group_routes_agents_retry": "Réessayer les agents",
-    "group_routes_agent_label": "Agent de ce groupe",
-    "group_routes_unknown_agent": "Agent inconnu",
-    "group_routes_updated": "Agent du groupe mis à jour",
-    "group_routes_update_failed": "Impossible de mettre à jour l'agent du groupe",
+    "page_description": "Connectez chaque agent Multica à son propre robot DingTalk. Les membres peuvent lui écrire en privé, le @mentionner dans un groupe et saisir /issue pour créer une tâche Multica.",
+    "agent_page_description": "Utilisez un bot DingTalk dédié pour écrire à cet agent en privé, le @mentionner dans un groupe ou saisir /issue pour créer une tâche Multica.",
+    "groups_title": "Groupes récents",
+    "groups_description": "Un groupe apparaît lorsqu'un membre de l'espace de travail associe son compte DingTalk et y @mentionne ce bot. Les groupes actifs au cours des 90 derniers jours sont affichés par défaut.",
+    "groups_overview_description": "Chaque connexion indique son agent, son bot DingTalk et les groupes récemment observés.",
+    "groups_loading": "Chargement des groupes…",
+    "groups_empty": "Aucun message de groupe observé pour l'instant.",
+    "groups_no_recent": "Aucun groupe actif au cours des 90 derniers jours.",
+    "groups_inactive": "Inactifs depuis longtemps ({{count}})",
+    "groups_load_more": "Charger plus",
+    "groups_error": "Impossible de charger les groupes DingTalk.",
+    "groups_retry": "Réessayer",
+    "group_untitled": "Groupe DingTalk sans titre",
+    "groups_count": "{{count}}",
+    "conversation_id_label": "Identifiant de conversation du groupe DingTalk",
+    "group_last_active": "Dernière activité {{time}}",
+    "group_mentions_one": "{{count}} mention",
+    "group_mentions_other": "{{count}} mentions",
+    "group_forget": "Oublier",
+    "group_forget_title": "Oublier ce groupe ?",
+    "group_forget_description": "Le groupe sera retiré de l'inventaire de Multica sans supprimer les conversations ni les messages. Il réapparaîtra lorsque quelqu'un @mentionnera de nouveau le bot.",
+    "group_forget_cancel": "Annuler",
+    "group_forget_confirm": "Oublier le groupe",
+    "group_forget_success": "Groupe retiré de l'inventaire",
+    "group_forget_failed": "Impossible de retirer le groupe",
+    "bot_identity_unavailable": "Identité indisponible",
+    "bot_permission_tooltip_prefix": "Dans DingTalk Open Platform, accordez à l'application de ce bot la permission",
+    "bot_permission_tooltip_suffix": ", puis @mentionnez de nouveau le bot dans un groupe DingTalk où il a été ajouté.",
     "not_enabled_title": "Intégration DingTalk non activée",
     "not_enabled_description_prefix": "Définissez",
     "not_enabled_description_suffix": "sur le serveur pour permettre l'installation de robots DingTalk.",
     "not_enabled_self_host_hint": "Auto-hébergement : voir le README du projet pour les détails.",
-    "connected_bots": "Bots connectés",
+    "connections_title": "Connexions",
+    "deleted_agent": "Agent supprimé",
     "loading": "Chargement…",
     "empty_title": "Aucun bot connecté pour l'instant",
     "empty_description_prefix": "Ouvrez un agent de cet espace de travail et cliquez sur",
@@ -881,6 +1033,7 @@
     "empty_description_suffix": "pour lui installer un robot.",
     "revoked_badge": "révoqué",
     "installed_at_label": "Installé {{when}}",
+    "identity_label": "Identifiant de personnel associé : {{identity}}",
     "disconnect": "Déconnecter",
     "disconnecting": "Déconnexion…",
     "disconnect_confirm_title": "Déconnecter ce bot DingTalk ?",
@@ -890,7 +1043,7 @@
     "toast_disconnect_failed": "Échec de la déconnexion",
     "bind_button": "Connecter DingTalk",
     "bind_button_title": "Connecter {{agent}} à un bot DingTalk",
-    "agent_bot_connected_label": "Connecté à DingTalk",
+    "agent_bot_connected_label": "Bot connecté :",
     "agent_bot_disconnect_tooltip": "Dissocier ce bot DingTalk de l'agent. Le bot cessera de recevoir les messages DingTalk.",
     "byo_dialog_title": "Connecter un bot DingTalk",
     "byo_docs_link": "Pas à pas : connecter votre agent Multica à DingTalk",
@@ -900,12 +1053,11 @@
     "byo_submitting": "Connexion…",
     "byo_cancel": "Annuler",
     "byo_success_toast": "Bot DingTalk connecté",
-    "byo_failed_toast": "Impossible de connecter le bot DingTalk",
-    "identity_label": "Identité DingTalk associée : {{identity}}"
+    "byo_failed_toast": "Impossible de connecter le bot DingTalk"
   },
   "wecom": {
     "section_title": "WeCom",
-    "page_description": "Connectez chaque agent Multica à son propre bot intelligent WeCom (企业微信). Les membres peuvent lui écrire en privé, le mentionner dans des groupes, et taper /issue pour créer un ticket Multica. L'agent répond via une connexion WebSocket longue, aucune URL de rappel publique n'est donc nécessaire.",
+    "page_description": "Connectez chaque agent Multica à son propre bot intelligent WeCom (企业微信). Les membres peuvent lui écrire en privé, le mentionner dans des groupes, et taper /issue pour créer une tâche Multica. L'agent répond via une connexion WebSocket longue, aucune URL de rappel publique n'est donc nécessaire.",
     "not_enabled_title": "Intégration WeCom non activée",
     "not_enabled_description_prefix": "Définissez",
     "not_enabled_description_suffix": "sur le serveur pour permettre l'installation de bots intelligents WeCom.",
@@ -952,6 +1104,47 @@
     "byo_credentials_unverifiable": "Impossible de joindre WeCom pour vérifier ce bot. Vos identifiants n'ont pas été modifiés — réessayez dans un instant.",
     "byo_install_failed": "Impossible d'enregistrer ce bot — une erreur est survenue de notre côté. Vos identifiants n'ont pas été modifiés ; réessayez, et contactez le support si le problème persiste.",
     "byo_failed_toast": "Impossible de connecter le bot WeCom"
+  },
+  "telegram": {
+    "section_title": "Telegram",
+    "page_description": "Connectez chaque agent Multica à son propre bot Telegram. Les membres peuvent écrire au bot en privé, le mentionner dans un groupe, taper /issue pour ouvrir une tâche Multica, et suivre la réponse de l'agent en direct.",
+    "not_enabled_title": "Intégration Telegram non activée",
+    "not_enabled_description_prefix": "Définissez",
+    "not_enabled_description_suffix": "sur le serveur pour autoriser l'installation de bots Telegram.",
+    "not_enabled_self_host_hint": "Auto-hébergement : voir le README du projet pour le détail.",
+    "preview_title": "Installation Telegram bientôt disponible",
+    "preview_description": "La clé de chiffrement au repos est définie, mais les installations ne sont pas encore disponibles sur cette installation. Le bouton Connecter apparaîtra ici dès qu'elles le seront.",
+    "connected_bots": "Bots connectés",
+    "loading": "Chargement…",
+    "load_failed": "Impossible de charger les installations Telegram",
+    "empty_title": "Aucun bot connecté pour l'instant",
+    "empty_description_prefix": "Ouvrez un agent de cet espace de travail et cliquez sur",
+    "empty_description_cta": "Connecter Telegram",
+    "empty_description_suffix": "pour lui installer un bot.",
+    "revoked_badge": "révoqué",
+    "installed_at_label": "Installé {{when}}",
+    "disconnect": "Déconnecter",
+    "disconnecting": "Déconnexion…",
+    "disconnect_confirm_title": "Déconnecter ce bot Telegram ?",
+    "disconnect_confirm_description": "Le bot cessera de recevoir les messages Telegram de cet espace de travail. L'historique des conversations dans Multica est conservé ; vous pourrez le reconnecter plus tard depuis le même agent.",
+    "disconnect_confirm_cancel": "Annuler",
+    "toast_disconnected": "Bot Telegram déconnecté",
+    "toast_disconnect_failed": "La déconnexion a échoué",
+    "bind_button": "Connecter Telegram",
+    "bind_button_title": "Connecter {{agent}} à un bot Telegram",
+    "agent_bot_connected_label": "Connecté à Telegram",
+    "agent_bot_disconnect_tooltip": "Dissocier ce bot Telegram de l'agent. Le bot cessera de recevoir les messages Telegram.",
+    "agent_bot_manage_link": "Ouvrir dans Telegram",
+    "agent_bot_manage_tooltip": "Ouvrir une conversation avec ce bot dans Telegram.",
+    "connect_dialog_title": "Connecter un bot Telegram",
+    "connect_dialog_description": "Créez un bot avec @BotFather dans Telegram, puis collez son jeton ci-dessous. Le jeton est vérifié en direct et stocké chiffré.",
+    "connect_docs_link": "Pas à pas : connecter votre agent Multica à Telegram",
+    "bot_token_label": "Jeton du bot",
+    "connect_submit": "Connecter",
+    "connect_submitting": "Connexion…",
+    "connect_cancel": "Annuler",
+    "connect_success_toast": "Bot Telegram connecté",
+    "connect_failed_toast": "Impossible de connecter le bot Telegram"
   },
   "repositories": {
     "section_title": "Dépôts",
@@ -1013,6 +1206,84 @@
       "downloading": "La v{{version}} se télécharge en arrière-plan — vous serez averti quand elle sera prête à installer.",
       "check_now": "Vérifier maintenant",
       "checking": "Vérification…"
+    },
+    "daemon": {
+      "title": "Démon",
+      "description": "Configurez le comportement du démon d'agent local avec l'application de bureau.",
+      "settings_saved": "Paramètres du démon enregistrés",
+      "settings_save_failed": "Échec de l'enregistrement des paramètres du démon",
+      "signin_expired": "Connexion expirée",
+      "signin_expired_description": "Le démon local n'a pas pu s'authentifier : cet appareil ne peut donc pas prendre en charge d'exécutions. Reconnectez-vous pour le rétablir.",
+      "signin_again": "Se reconnecter",
+      "external_description_before": "Le démon de cet appareil s'exécute en dehors de l'application, par exemple dans WSL2. L'application ne peut donc ni le démarrer ni l'arrêter. Démarrez-le ou arrêtez-le depuis cet environnement avec",
+      "external_description_after": ".",
+      "auto_start_title": "Démarrage automatique à l'ouverture",
+      "auto_start_description": "Démarrez le démon à la connexion. Tant que l'application est ouverte, elle supervise les démons démarrés automatiquement et manuellement.",
+      "auto_stop_title": "Arrêt automatique à la fermeture",
+      "auto_stop_description": "Arrêtez le démon à la fermeture de l'application de bureau. Désactivez cette option pour le laisser fonctionner en arrière-plan.",
+      "cli_status": "État du CLI",
+      "cli_checking": "Vérification…",
+      "cli_installed": "Le CLI multica est installé et disponible dans PATH.",
+      "cli_missing": "CLI multica introuvable. Installez-le pour activer la gestion du démon.",
+      "installation_guide": "Guide d'installation",
+      "diagnostics_title": "Diagnostics",
+      "diagnostics_description": "Détails d'identification et de connexion. Utiles pour signaler un bug ou comprendre pourquoi un runtime n'apparaît pas.",
+      "state": "État",
+      "uptime": "Durée de fonctionnement",
+      "daemon_id": "Identifiant du daemon",
+      "profile": "Profil",
+      "server_url": "URL du serveur",
+      "device_name": "Nom de l'appareil",
+      "workspaces": "Espaces de travail",
+      "state_stopped": "Arrêté",
+      "state_starting": "Démarrage…",
+      "state_running": "En cours",
+      "state_stopping": "Arrêt…",
+      "state_cli_not_found": "Échec de la configuration",
+      "state_installing_cli": "Configuration…",
+      "state_recovery_paused": "Récupération en pause",
+      "state_auth_expired": "Connexion requise",
+      "start_failed": "Échec du démarrage du démon",
+      "stop_failed": "Échec de l'arrêt du démon",
+      "restart_failed": "Échec du redémarrage du démon",
+      "restarting": "Redémarrage du démon",
+      "restarting_description": "Les runtimes seront de nouveau en ligne dans quelques secondes.",
+      "view_logs": "Voir les journaux",
+      "managed_externally": "Géré en dehors de l'application",
+      "restart": "Redémarrer",
+      "stop": "Arrêter",
+      "start": "Démarrer",
+      "retry_setup": "Réessayer la configuration",
+      "stop_confirm_title_one": "Arrêter le démon avec {{count}} exécution active ?",
+      "stop_confirm_title_other": "Arrêter le démon avec {{count}} exécutions actives ?",
+      "stop_confirm_description_one": "{{count}} exécution est active sur cet appareil. L'arrêt l'interrompra : les exécutions concernées seront marquées en échec à l'expiration du délai. Le démon ne redémarrera pas automatiquement.",
+      "stop_confirm_description_other": "{{count}} exécutions sont actives sur cet appareil. L'arrêt les interrompra : les exécutions concernées seront marquées en échec à l'expiration du délai. Le démon ne redémarrera pas automatiquement.",
+      "cancel": "Annuler",
+      "stop_daemon": "Arrêter le démon",
+      "logs_title": "Journaux du démon local",
+      "close": "Fermer",
+      "search": "Rechercher…",
+      "copy": "Copier",
+      "clear": "Effacer",
+      "copied_lines_one": "{{count}} ligne copiée",
+      "copied_lines_other": "{{count}} lignes copiées",
+      "copy_failed": "Échec de la copie",
+      "showing_logs": "{{shown}} sur {{total}} affichées",
+      "buffer_full": "(tampon plein)",
+      "jump_latest": "Aller aux dernières entrées",
+      "runtime_count_one": "{{count}} runtime",
+      "runtime_count_other": "{{count}} runtimes",
+      "more_repeated": "{{count}} autres « {{message}} » — cliquer pour développer",
+      "collapse_repeated": "replier {{count}} répétitions",
+      "no_matching_logs": "Aucune ligne de journal correspondante",
+      "no_matching_logs_description": "Essayez une autre recherche ou un autre filtre de niveau.",
+      "not_running": "Le démon est arrêté",
+      "not_running_description": "Démarrez le démon pour afficher les journaux ici.",
+      "waiting_logs": "En attente de journaux…",
+      "waiting_logs_description": "Les nouvelles entrées apparaîtront en temps réel.",
+      "reconnect_failed": "Impossible de reconnecter le démon",
+      "try_again_moment": "Veuillez réessayer dans un instant.",
+      "try_again": "Veuillez réessayer."
     }
   },
   "members": {
@@ -1023,6 +1294,15 @@
     "inviting": "Invitation...",
     "toast_invitation_sent": "Invitation envoyée",
     "toast_invitation_failed": "Échec de l'envoi de l'invitation",
+    "toast_seat_capacity_unavailable": "Impossible de vérifier la capacité de membres. Veuillez réessayer.",
+    "toast_seat_capacity_rate_limited": "La capacité de sièges est en cours de modification. Réessayez dans un instant.",
+    "seat_purchase_title": "Ajouter un siège pour envoyer cette invitation ?",
+    "seat_purchase_description": "Aucun siège acheté n'est disponible pour {{email}}. Vérifiez l'estimation de Stripe, puis approuvez ensemble l'achat et l'invitation.",
+    "purchase_seat_and_invite": "Acheter 1 siège et inviter",
+    "retry_seat_purchase": "Réessayer l'achat",
+    "seat_purchase_waiting": "En attente de la confirmation du nouveau siège par Stripe. Gardez cette page ouverte pour envoyer l'invitation automatiquement ; si vous la quittez, le siège acheté sera conservé et vous pourrez inviter à nouveau plus tard.",
+    "seat_purchase_timeout": "L'achat du siège a été soumis, mais sa confirmation prend plus de temps que prévu. Aucune invitation n'a été envoyée. Réessayez l'invitation lorsque la facturation indique un siège disponible.",
+    "seat_purchase_capacity_taken": "Le siège acheté n'est plus disponible, l'invitation n'a donc pas été envoyée. Vérifiez les sièges actuels avant de réessayer.",
     "no_members": "Aucun membre trouvé.",
     "pending_title": "Invitations en attente ({{count}})",
     "pending_status": "En attente",
@@ -1054,7 +1334,7 @@
       },
       "member": {
         "label": "Membre",
-        "description": "Créer des tickets et y travailler"
+        "description": "Créer des tâches et y travailler"
       }
     },
     "share_links_title": "Liens de partage",
@@ -1078,95 +1358,20 @@
     "expiry_30d": "30 jours",
     "expiry_never": "Jamais"
   },
-  "issue_statuses": {
-    "title": "États des tickets",
-    "description": "Ajoutez vos propres états en plus des sept états intégrés. Chaque état appartient à une catégorie, et c'est la catégorie qui détermine son comportement.",
-    "loading": "Chargement des états…",
-    "add": "Ajouter un état",
-    "show_archived": "Afficher les archivés ({{count}})",
-    "archived_badge": "Archivé",
-    "archived_hint": "Retiré des nouvelles affectations. Les tickets qui le portent le gardent.",
-    "flag_off": "Les états personnalisés ne sont pas encore activés sur cette installation. Les états intégrés ci-dessous fonctionnent normalement.",
-    "reorder_failed": "Le nouvel ordre n'a pas pu être enregistré.",
-    "actions": {
-      "open": "Actions pour {{name}}",
-      "edit": "Modifier",
-      "archive": "Archiver",
-      "reorder": "Réordonner {{name}}"
-    },
-    "editor": {
-      "create_title": "Nouvel état",
-      "edit_title": "Modifier l'état",
-      "behavior_hint": "Cet état se comporte exactement comme {{category}}.",
-      "name": "Nom",
-      "name_placeholder": "ex. Relecture de code",
-      "category": "Catégorie",
-      "category_locked": "La catégorie ne peut pas être changée — des tickets qui portent cet état en dépendent.",
-      "description": "Description",
-      "description_placeholder": "Ce que cet état signifie pour votre équipe",
-      "color": "Couleur",
-      "cancel": "Annuler",
-      "save": "Enregistrer",
-      "saving": "Enregistrement…",
-      "save_failed": "L'état n'a pas pu être enregistré.",
-      "key_hint": "Désigné par {{key}} dans l'API et la CLI."
-    },
-    "archive_dialog": {
-      "title": "Archiver cet état ?",
-      "description": "« {{name}} » cesse d'être proposé pour les nouveaux tickets. Ceux qui le portent le gardent et continuent de se comporter exactement comme aujourd'hui.",
-      "cancel": "Annuler",
-      "confirm": "Archiver",
-      "failed": "L'état n'a pas pu être archivé."
-    },
-    "categories": {
-      "backlog": "En attente. Affecter un ticket ici ne démarre jamais un agent.",
-      "todo": "En file. Déplacer un ticket ici démarre l'agent qui lui est affecté.",
-      "in_progress": "En cours de traitement.",
-      "in_review": "Livré, en attente d'une relecture humaine. Clôt l'exécution de l'autopilote.",
-      "done": "Terminé.",
-      "blocked": "À l'arrêt, en attente d'une dépendance extérieure.",
-      "cancelled": "Abandonné."
-    }
-  },
-  "telegram": {
-    "section_title": "Telegram",
-    "page_description": "Connectez chaque agent Multica à son propre bot Telegram. Les membres peuvent écrire au bot en privé, le mentionner dans un groupe, taper /issue pour ouvrir un ticket Multica, et suivre la réponse de l'agent en direct.",
-    "not_enabled_title": "Intégration Telegram non activée",
-    "not_enabled_description_prefix": "Définissez",
-    "not_enabled_description_suffix": "sur le serveur pour autoriser l'installation de bots Telegram.",
-    "not_enabled_self_host_hint": "Auto-hébergement : voir le README du projet pour le détail.",
-    "preview_title": "Installation Telegram bientôt disponible",
-    "preview_description": "La clé de chiffrement au repos est définie, mais les installations ne sont pas encore disponibles sur cette installation. Le bouton Connecter apparaîtra ici dès qu'elles le seront.",
-    "connected_bots": "Bots connectés",
-    "loading": "Chargement…",
-    "load_failed": "Impossible de charger les installations Telegram",
-    "empty_title": "Aucun bot connecté pour l'instant",
-    "empty_description_prefix": "Ouvrez un agent de cet espace de travail et cliquez sur",
-    "empty_description_cta": "Connecter Telegram",
-    "empty_description_suffix": "pour lui installer un bot.",
-    "revoked_badge": "révoqué",
-    "installed_at_label": "Installé {{when}}",
-    "disconnect": "Déconnecter",
-    "disconnecting": "Déconnexion…",
-    "disconnect_confirm_title": "Déconnecter ce bot Telegram ?",
-    "disconnect_confirm_description": "Le bot cessera de recevoir les messages Telegram de cet espace de travail. L'historique des conversations dans Multica est conservé ; vous pourrez le reconnecter plus tard depuis le même agent.",
-    "disconnect_confirm_cancel": "Annuler",
-    "toast_disconnected": "Bot Telegram déconnecté",
-    "toast_disconnect_failed": "La déconnexion a échoué",
-    "bind_button": "Connecter Telegram",
-    "bind_button_title": "Connecter {{agent}} à un bot Telegram",
-    "agent_bot_connected_label": "Connecté à Telegram",
-    "agent_bot_disconnect_tooltip": "Dissocier ce bot Telegram de l'agent. Le bot cessera de recevoir les messages Telegram.",
-    "agent_bot_manage_link": "Ouvrir dans Telegram",
-    "agent_bot_manage_tooltip": "Ouvrir une conversation avec ce bot dans Telegram.",
-    "connect_dialog_title": "Connecter un bot Telegram",
-    "connect_dialog_description": "Créez un bot avec @BotFather dans Telegram, puis collez son jeton ci-dessous. Le jeton est vérifié en direct et stocké chiffré.",
-    "connect_docs_link": "Pas à pas : connecter votre agent Multica à Telegram",
-    "bot_token_label": "Jeton du bot",
-    "connect_submit": "Connecter",
-    "connect_submitting": "Connexion…",
-    "connect_cancel": "Annuler",
-    "connect_success_toast": "Bot Telegram connecté",
-    "connect_failed_toast": "Impossible de connecter le bot Telegram"
+  "integrations": {
+    "description": "Connectez vos outils et gérez chaque intégration au même endroit.",
+    "code_title": "Code et dépôts",
+    "messaging_title": "Canaux de messagerie",
+    "apps_title": "Vos applications connectées",
+    "apps_scope": "Ces connexions d'applications appartiennent à votre compte. Les connexions aux canaux de l'espace de travail se gèrent ci-dessus.",
+    "github_hint": "Connectez GitHub et configurez l'association des pull requests.",
+    "vcs_hint": "Connectez GitLab, Gitea ou Forgejo.",
+    "apps_hint": "Autorisez des applications pour vos agents via Composio.",
+    "back": "Toutes les intégrations",
+    "status_connected": "Connecté",
+    "status_not_connected": "Non connecté",
+    "status_loading": "Vérification...",
+    "status_unknown": "État indisponible",
+    "channel_hint": "Discutez avec les agents et créez des tâches depuis {{channel}}."
   }
 }
