@@ -2,6 +2,7 @@ package agent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"os/exec"
@@ -308,26 +309,54 @@ func (b *grokBackend) Execute(ctx context.Context, prompt string, opts ExecOptio
 		// revoked XAI_API_KEY selects `xai.api_key` and fails there, while the
 		// cached login token beside it would have succeeded. Only give up once
 		// every method has refused, and report the last refusal.
+		//
+		// ⚠ Only a JSON-RPC error is a refusal. Everything else `c.request`
+		// can return — a write failure, the reader clearing pending requests
+		// on stdout EOF, a cancelled or expired context — means the transport
+		// is gone, and the next `authenticate` would wait on a reader that has
+		// already exited until the run timeout fires, replacing the real cause
+		// with `context deadline exceeded`. Retry the credential, never the
+		// connection.
 		authenticated := ""
+		refused := 0
 		var authErr error
 		for _, methodID := range methodIDs {
-			if _, err := c.request(runCtx, "authenticate", map[string]any{
+			_, err := c.request(runCtx, "authenticate", map[string]any{
 				"methodId": methodID,
 				"_meta":    map[string]any{"headless": true},
-			}); err != nil {
-				authErr = fmt.Errorf("grok authenticate (%s) failed: %w", methodID, err)
-				b.cfg.Logger.Warn("grok authenticate failed; trying the next advertised method",
-					"method", methodID, "error", err)
-				continue
+			})
+			if err == nil {
+				authenticated = methodID
+				break
 			}
-			authenticated = methodID
-			break
+			var rpcErr *acpRPCError
+			if !errors.As(err, &rpcErr) {
+				finalStatus = "failed"
+				finalError = fmt.Sprintf("grok authenticate (%s) failed: %v", methodID, err)
+				resCh <- Result{Status: finalStatus, Error: finalError, DurationMs: time.Since(startTime).Milliseconds()}
+				return
+			}
+			refused++
+			authErr = fmt.Errorf("grok authenticate (%s) failed: %w", methodID, err)
+			b.cfg.Logger.Warn("grok authenticate failed; trying the next advertised method",
+				"method", methodID, "error", err)
 		}
 		if authenticated == "" {
 			finalStatus = "failed"
 			finalError = authErr.Error()
 			resCh <- Result{Status: finalStatus, Error: finalError, DurationMs: time.Since(startTime).Milliseconds()}
 			return
+		}
+		// A refusal the fallback recovered from is not a run failure. The
+		// stderr sniffer has been reading since process start, so a rejected
+		// key that also logged `[ERROR] AuthenticationError [HTTP 401]` left a
+		// terminal diagnostic behind; left in place, promoteACPResultOnProviderError
+		// would flip this run to `failed` after the next method authenticated
+		// and the prompt answered. Drop what the handshake recorded — and only
+		// that: the sniffer keeps watching, so a genuine execution failure
+		// still promotes.
+		if refused > 0 {
+			providerErr.discardRecovered()
 		}
 		b.cfg.Logger.Info("grok authenticated", "method", authenticated)
 

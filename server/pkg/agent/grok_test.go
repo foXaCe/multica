@@ -982,3 +982,101 @@ func grokMustFindModel(t *testing.T, models []Model, id string) Model {
 	t.Fatalf("model %q not in catalog: %+v", id, models)
 	return Model{}
 }
+
+// runGrokAuthScenario drives one full Grok run against a tailored fake CLI and
+// returns the result plus every JSON-RPC line the fake received. The request
+// log is what distinguishes "gave up on the first refusal" from "kept asking a
+// connection that is already gone".
+func runGrokAuthScenario(t *testing.T, script string, extraEnv map[string]string) (Result, string) {
+	t.Helper()
+	dir := t.TempDir()
+	fakePath := filepath.Join(dir, "grok")
+	requestsPath := filepath.Join(dir, "requests.jsonl")
+	writeTestExecutable(t, fakePath, []byte(script))
+
+	env := map[string]string{
+		"XAI_API_KEY":        "set-but-rejected",
+		"GROK_REQUESTS_FILE": requestsPath,
+	}
+	for k, v := range extraEnv {
+		env[k] = v
+	}
+	backend, err := New("grok", Config{ExecutablePath: fakePath, Logger: slog.Default(), Env: env})
+	if err != nil {
+		t.Fatalf("new grok backend: %v", err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	session, err := backend.Execute(ctx, "task", ExecOptions{Cwd: dir, Timeout: 1500 * time.Millisecond})
+	if err != nil {
+		t.Fatalf("execute: %v", err)
+	}
+	drained := make(chan struct{})
+	go func() {
+		defer close(drained)
+		for range session.Messages {
+		}
+	}()
+	var result Result
+	select {
+	case result = <-session.Result:
+	case <-ctx.Done():
+		t.Fatal("no result before cleanup deadline")
+	}
+	cancel()
+	select {
+	case <-drained:
+	case <-time.After(3 * time.Second):
+		t.Fatal("process cleanup did not finish")
+	}
+	requests, err := os.ReadFile(requestsPath)
+	if err != nil {
+		t.Fatalf("read requests: %v", err)
+	}
+	return result, string(requests)
+}
+
+// A dead transport is not a refused credential. When stdout closes during the
+// first `authenticate`, the reader goroutine clears the pending request and
+// exits; sending a second one would wait on a reader that no longer exists
+// until the run timeout fires, which also replaces the transport error with
+// `context deadline exceeded`.
+func TestGrokAuthStopsOnTransportFailure(t *testing.T) {
+	t.Parallel()
+	script := strings.Replace(fakeGrokACPScript(), `      if [ -n "$GROK_AUTH_FAIL" ]; then`, `      exec 1>&-
+      while IFS= read -r ignored; do
+        printf '%s\n' "$ignored" >> "$GROK_REQUESTS_FILE"
+      done
+      exit 0
+      if [ -n "$GROK_AUTH_FAIL" ]; then`, 1)
+
+	result, requests := runGrokAuthScenario(t, script, nil)
+
+	if got := strings.Count(requests, `"method":"authenticate"`); got != 1 {
+		t.Errorf("sent %d authenticate requests after transport EOF, want 1: error=%s duration=%dms", got, result.Error, result.DurationMs)
+	}
+	if strings.Contains(result.Error, "deadline exceeded") {
+		t.Errorf("the transport error was replaced by the run timeout: %s", result.Error)
+	}
+}
+
+// A refused method that the fallback recovered from must not decide the final
+// status. The refused attempt logs a terminal-looking diagnostic on stderr; the
+// next method authenticates and the prompt answers, so the run completed.
+func TestGrokRecoveredAuthDiagnosticDoesNotFailRun(t *testing.T) {
+	t.Parallel()
+	script := strings.Replace(fakeGrokACPScript(), "            continue",
+		"            printf '%s\\n' '[ERROR] AuthenticationError [HTTP 401]: API key rejected' >&2\n            continue", 1)
+
+	result, requests := runGrokAuthScenario(t, script, map[string]string{
+		"GROK_AUTH_REFUSE_METHOD": "xai.api_key",
+	})
+
+	if !strings.Contains(requests, `"method":"session/prompt"`) || result.Output != "pong" {
+		t.Fatalf("the fallback never reached the prompt: result=%+v requests=%s", result, requests)
+	}
+	if result.Status != "completed" {
+		t.Errorf("recovered authentication stderr failed a successful run: status=%s error=%s output=%q", result.Status, result.Error, result.Output)
+	}
+}
