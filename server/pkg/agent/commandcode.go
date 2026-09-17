@@ -593,15 +593,20 @@ func commandcodeToolOutput(raw json.RawMessage) string {
 
 // commandcodeModelLine matches one catalog row of `commandcode --list-models`.
 // The command has no JSON mode, so the human-readable table is the only
-// catalog source. A row is a provider-qualified id followed by two or more
-// spaces and a description:
+// catalog source. A row is an id followed by two or more spaces and a
+// description:
 //
 //	deepseek/deepseek-v4-flash             fast hybrid-attention reasoning (default)
+//	claude-sonnet-5                        best combo of speed & intelligence (recommended)
 //
-// Section headers ("Open Source", "Anthropic") carry no slash in their first
-// token and the trailing help text ("Pass the full id, …", "Docs:  https://…")
-// never matches the id shape, so both fall out without special-casing.
-var commandcodeModelLine = regexp.MustCompile(`^(\S+/\S+)\s{2,}(\S.*)$`)
+// Only the open-source providers qualify their ids with a slash; the Anthropic
+// and OpenAI sections list bare ids, so the id shape cannot require one.
+// Section headers ("Open Source", "Anthropic") are single-spaced or stand
+// alone, so they never reach the two-space column. The trailing help text is
+// excluded by the id ending on something other than a colon, which rules out
+// "Docs:  https://…" while leaving suffixed ids such as
+// "meituan/longcat-2.0:free" intact.
+var commandcodeModelLine = regexp.MustCompile(`^(\S*[^\s:])\s{2,}(\S.*)$`)
 
 // commandcodeDefaultMarker is how the catalog flags the model a bare run would
 // pick. It is stripped from the label so the marker does not leak into the UI.
