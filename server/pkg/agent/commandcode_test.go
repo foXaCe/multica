@@ -414,8 +414,13 @@ func TestCommandcodeBlockedArgsProtectTheDaemonChannel(t *testing.T) {
 }
 
 // The catalog fixture is the real shape of `commandcode --list-models` output
-// (Command Code 1.44.0): a header, section titles, aligned id/description
+// (Command Code 1.54.2): a header, section titles, aligned id/description
 // rows, and a trailing help block.
+//
+// Note the two id shapes. Open-source entries are provider-qualified, while
+// the Anthropic and OpenAI sections list bare ids — the reason the row pattern
+// cannot key on a slash. The ":free" suffix and the "Docs:" line are both here
+// on purpose: they are what separates a suffixed id from a label.
 const commandcodeCatalogFixture = `Available models  ·  67 models
 
 Open Source
@@ -423,10 +428,15 @@ Open Source
 deepseek/deepseek-v4-pro               hybrid-attention long-context reasoning
 deepseek/deepseek-v4-flash             fast hybrid-attention reasoning (default)
 moonshotai/kimi-k3                     long-horizon coding & knowledge work with 1M context
+meituan/longcat-2.0:free               FREE trillion-parameter agentic coding with 1M context
 
 Anthropic
 
-anthropic/claude-fable-5-1             fast frontier coding
+claude-fable-5-1                       fast frontier coding
+
+OpenAI
+
+gpt-6-astra                            most capable OpenAI model for demanding reasoning
 
 Pass the full id, or just the short name after the last "/":
   cmd -m kimi-k3
@@ -455,8 +465,8 @@ func TestCommandcodeModelLineParsesCatalog(t *testing.T) {
 		got = append(got, model)
 	}
 
-	if len(got) != 4 {
-		t.Fatalf("parsed %d models, want 4: %+v", len(got), got)
+	if len(got) != 6 {
+		t.Fatalf("parsed %d models, want 6: %+v", len(got), got)
 	}
 
 	// Section headers ("Open Source", "Anthropic") and the trailing help block
@@ -483,8 +493,19 @@ func TestCommandcodeModelLineParsesCatalog(t *testing.T) {
 	if got[1].Label != "fast hybrid-attention reasoning" {
 		t.Errorf("label: got %q", got[1].Label)
 	}
-	if got[3].Provider != "anthropic" {
-		t.Errorf("provider from a later section: got %+v", got[3])
+	if got[3].ID != "meituan/longcat-2.0:free" || got[3].Provider != "meituan" {
+		t.Errorf("a colon-suffixed id must survive: got %+v", got[3])
+	}
+
+	// The bare ids are the regression this fixture exists for. Requiring a
+	// slash silently dropped every Anthropic and OpenAI row — 16 of the 70
+	// models Command Code 1.54.2 offers — and the catalog looked merely stale
+	// rather than truncated.
+	if got[4].ID != "claude-fable-5-1" || got[4].Provider != "" {
+		t.Errorf("bare Anthropic id: got %+v", got[4])
+	}
+	if got[5].ID != "gpt-6-astra" || got[5].Provider != "" {
+		t.Errorf("bare OpenAI id: got %+v", got[5])
 	}
 }
 
