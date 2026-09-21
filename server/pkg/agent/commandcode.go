@@ -2,6 +2,7 @@ package agent
 
 import (
 	"bufio"
+	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
@@ -263,16 +264,40 @@ func (b *commandcodeBackend) Execute(ctx context.Context, prompt string, opts Ex
 		b.cfg.Logger.Info("commandcode finished", "pid", cmd.Process.Pid, "status", scanResult.status, "duration", duration.Round(time.Millisecond).String())
 
 		resCh <- Result{
-			Status:     scanResult.status,
-			Output:     scanResult.output,
-			Error:      scanResult.errMsg,
-			DurationMs: duration.Milliseconds(),
-			SessionID:  scanResult.sessionID,
-			Usage:      scanResult.usage,
+			Status:         scanResult.status,
+			Output:         scanResult.output,
+			Error:          scanResult.errMsg,
+			DurationMs:     duration.Milliseconds(),
+			SessionID:      scanResult.sessionID,
+			Usage:          scanResult.usage,
+			ResumeRejected: commandcodeResumeRefused(scanResult.errMsg, opts.ResumeSessionID),
 		}
 	}()
 
 	return &Session{Messages: msgCh, Result: resCh}, nil
+}
+
+// commandcodeResumeRefusedRe matches Command Code refusing the `--session`
+// value the daemon handed it. The transcript is a file on the runtime's disk,
+// so it goes away on its own: workspace GC, a recreated worktree, a machine
+// swap. When that happens the CLI exits 1 before doing any work.
+//
+// Without this the daemon read the bare exit status as a failed run and left
+// the task dead, when the work was still perfectly runnable from a fresh
+// session — the same defect fixed for Grok in multica-ai/multica#8305.
+//
+// Matching on wording is a guard, not the decision: the id the daemon sent
+// must appear in the message too, so a sentence that merely talks about
+// sessions — an agent quoting this very error, say — cannot pass for the CLI
+// refusing ours.
+var commandcodeResumeRefusedRe = regexp.MustCompile(
+	`--session\b.*\b(?:is neither an existing|not an existing|no such session|unknown session)`)
+
+func commandcodeResumeRefused(errMsg, sessionID string) bool {
+	if sessionID == "" || !strings.Contains(errMsg, sessionID) {
+		return false
+	}
+	return commandcodeResumeRefusedRe.MatchString(errMsg)
 }
 
 // commandcodeExitCode extracts the process exit status from a cmd.Wait error,
@@ -368,9 +393,45 @@ type commandcodeUsage struct {
 	CacheWriteTokens int64 `json:"cacheWriteTokens"`
 }
 
+// commandcodeError is the `error` field, which Command Code writes in two
+// shapes: an object for structured failures, and a bare string everywhere
+// else — `tool_errored`, `api_retry`, and the `result` line all carry a plain
+// sentence. Decoding only the object shape made encoding/json reject the whole
+// line, so an error-bearing line was dropped as if it were noise.
+//
+// That was not a cosmetic loss. The `result` line is what carries the run's
+// real cause and its session id, so a failing run reported a bare exit status
+// with no output and no resume pointer:
+//
+//	{"type":"result","subtype":"error","error":"Error: --session \"…\" is neither an existing .jsonl transcript…"}
+//
+// reached the daemon as `commandcode exited with error: exit status 1`.
 type commandcodeError struct {
 	Name    string `json:"name"`
 	Message string `json:"message"`
+}
+
+func (e *commandcodeError) UnmarshalJSON(data []byte) error {
+	trimmed := bytes.TrimSpace(data)
+	if len(trimmed) == 0 || string(trimmed) == "null" {
+		return nil
+	}
+	if trimmed[0] == '"' {
+		var s string
+		if err := json.Unmarshal(trimmed, &s); err != nil {
+			return err
+		}
+		e.Message = s
+		return nil
+	}
+	// The object shape. A named alias avoids recursing into this method.
+	type objet commandcodeError
+	var o objet
+	if err := json.Unmarshal(trimmed, &o); err != nil {
+		return err
+	}
+	*e = commandcodeError(o)
+	return nil
 }
 
 func (e *commandcodeError) String() string {

@@ -526,3 +526,94 @@ func TestCommandcodeIsWiredIntoTheFactory(t *testing.T) {
 		t.Error("commandcode has no launch header")
 	}
 }
+
+// Command Code writes `error` as a bare string on tool_errored, api_retry and
+// the result line, and as an object elsewhere. Decoding only the object shape
+// made encoding/json reject the entire line, so the result line — the one
+// carrying the run's real cause and its session id — was dropped as noise and
+// the run surfaced as a bare exit status.
+func TestCommandcodeResultDecodesAStringError(t *testing.T) {
+	t.Parallel()
+	const stream = `{"type":"event","event":{"type":"tool_errored","toolCallId":"call_1","toolName":"read_file","error":"File not found or not readable"}}
+{"type":"result","subtype":"error","usage":{"inputTokens":0,"outputTokens":0},"durationMs":52,"finalText":"","sessionId":"ses_abc","error":"Error: --session \"f26764ef\" is neither an existing .jsonl transcript nor a known session-id prefix."}
+`
+	b := &commandcodeBackend{cfg: Config{Logger: slog.Default()}}
+	ch := make(chan Message, 64)
+	res := b.processEvents(strings.NewReader(stream), ch)
+	close(ch)
+
+	if !res.sawResultLine {
+		t.Fatal("the result line was skipped, so the run has no terminator")
+	}
+	if res.status != "failed" {
+		t.Errorf("status = %q, want failed", res.status)
+	}
+	if !strings.Contains(res.errMsg, "neither an existing") {
+		t.Errorf("the string error never reached the result: %q", res.errMsg)
+	}
+	if res.sessionID != "ses_abc" {
+		t.Errorf("sessionID = %q, want ses_abc — the resume pointer was lost with the line", res.sessionID)
+	}
+}
+
+// The object shape still decodes, so this is an addition and not a swap.
+func TestCommandcodeResultDecodesAnObjectError(t *testing.T) {
+	t.Parallel()
+	const stream = `{"type":"result","subtype":"error","error":{"name":"ProviderError","message":"upstream refused"}}` + "\n"
+	b := &commandcodeBackend{cfg: Config{Logger: slog.Default()}}
+	ch := make(chan Message, 8)
+	res := b.processEvents(strings.NewReader(stream), ch)
+	close(ch)
+
+	if res.errMsg != "ProviderError: upstream refused" {
+		t.Errorf("errMsg = %q, want the name and message joined", res.errMsg)
+	}
+}
+
+// A transcript is a file on the runtime's disk: workspace GC, a recreated
+// worktree or a machine swap can take it away. The run is still perfectly
+// doable from a fresh session, so the daemon must be told to retry rather than
+// left reading a bare failure.
+func TestCommandcodeResumeRefusedIsRecognised(t *testing.T) {
+	t.Parallel()
+	const id = "f26764ef-8b2e-4ff1-baee-25f4cafd0dab"
+	for _, tc := range []struct {
+		name      string
+		errMsg    string
+		sessionID string
+		want      bool
+	}{
+		{
+			name:      "the CLI refusing the id we sent",
+			errMsg:    `Error: --session "` + id + `" is neither an existing .jsonl transcript nor a known session-id prefix.; commandcode exited with error: exit status 1`,
+			sessionID: id,
+			want:      true,
+		},
+		{
+			name:      "no resume was requested",
+			errMsg:    `Error: --session "` + id + `" is neither an existing .jsonl transcript nor a known session-id prefix.`,
+			sessionID: "",
+			want:      false,
+		},
+		{
+			name:      "the wording matches but the id is someone else's",
+			errMsg:    `Error: --session "0000-other" is neither an existing .jsonl transcript nor a known session-id prefix.`,
+			sessionID: id,
+			want:      false,
+		},
+		{
+			name:      "an ordinary failure that happens to mention our id",
+			errMsg:    "the model returned no content for session " + id,
+			sessionID: id,
+			want:      false,
+		},
+	} {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+			if got := commandcodeResumeRefused(tc.errMsg, tc.sessionID); got != tc.want {
+				t.Errorf("commandcodeResumeRefused = %v, want %v", got, tc.want)
+			}
+		})
+	}
+}
