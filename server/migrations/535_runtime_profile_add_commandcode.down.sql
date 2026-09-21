@@ -1,4 +1,4 @@
--- Restore the pre-495 whitelist. Existing Command Code rows remain valid
+-- Restore the pre-535 whitelist. Existing Command Code rows remain valid
 -- because the replacement constraint is NOT VALID, but new Command Code
 -- profiles are blocked.
 ALTER TABLE runtime_profile DROP CONSTRAINT IF EXISTS runtime_profile_protocol_family_check;
