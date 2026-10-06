@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { paths, useCurrentWorkspace } from "@multica/core/paths";
 import {
   createShortcutChord,
+  getShortcutPlatform,
   isEditableShortcutTarget,
   isPortalLayerShortcutTarget,
   type ShortcutChord,
@@ -17,31 +18,43 @@ const MAX_NUMBERED_WORKSPACES = 9;
 const EMPTY_WORKSPACES: { id: string; slug: string }[] = [];
 
 /**
- * Alt+Shift+1…9 opens the Nth workspace of the switcher list.
+ * Ctrl+Alt+1…9 (also Alt+Shift+1…9) opens the Nth workspace of the switcher list.
  *
  * Not a rebindable action: it is nine positional chords, and neither of the
  * obvious single-modifier families is free. Mod+1…9 selects browser and
  * desktop tabs (see PRIMARY_RESERVED_KEYS), and Alt+1…9 selects tabs in
  * Chrome and Firefox on Linux, where the page never receives the keydown.
  *
+ * The match is deliberately tolerant on the modifiers: one of Alt / AltGraph
+ * plus one of Ctrl / Shift. Keyboards disagree on what the Option key sends —
+ * a Mac keyboard on Linux often reports it as AltGraph, not Alt — and a chord
+ * that silently does nothing on one of them reads as broken. Meta (Cmd / Super)
+ * is never part of it: desktops own Super+digit.
+ *
  * Matched on the physical key (`event.code`) rather than `event.key`: with
  * Shift held the logical key is "!" on QWERTY, and on AZERTY the unshifted top
  * row is not digits at all, so only the key position means "the Nth".
  */
 export function workspaceSwitchIndex(event: KeyboardEvent): number | null {
-  if (!event.altKey || !event.shiftKey || event.ctrlKey || event.metaKey) return null;
-  if (event.getModifierState?.("AltGraph")) return null;
+  if (event.metaKey) return null;
+  const alt = event.altKey || event.getModifierState?.("AltGraph") === true;
+  if (!alt || !(event.ctrlKey || event.shiftKey)) return null;
   const match = /^Digit([1-9])$/.exec(event.code);
   return match ? Number(match[1]) - 1 : null;
 }
 
-/** The chord that opens the workspace at `index`, for display; null past the ninth. */
+/**
+ * The chord shown for the workspace at `index` — Ctrl+Alt+N, ⌃⌥N on macOS —
+ * or null past the ninth. On macOS the Control key is the literal `control`
+ * modifier (`primary` would render ⌘); elsewhere `primary` is Ctrl.
+ */
 export function workspaceSwitchShortcut(index: number): ShortcutChord | null {
   if (index < 0 || index >= MAX_NUMBERED_WORKSPACES) return null;
-  return createShortcutChord(String(index + 1), { alt: true, shift: true });
+  const mac = getShortcutPlatform() === "macos";
+  return createShortcutChord(String(index + 1), mac ? { control: true, alt: true } : { primary: true, alt: true });
 }
 
-/** Listens for Alt+Shift+1…9 and switches to that workspace. */
+/** Listens for Ctrl+Alt+1…9 (or Alt+Shift+1…9) and switches to that workspace. */
 export function WorkspaceSwitchShortcuts() {
   const navigation = useNavigation();
   const currentId = useCurrentWorkspace()?.id;
@@ -52,8 +65,9 @@ export function WorkspaceSwitchShortcuts() {
       if (shouldIgnoreGlobalShortcutEvent(event)) return;
       const index = workspaceSwitchIndex(event);
       if (index === null) return;
-      // Option+Shift+digit types a character on macOS, and an open menu or
-      // dialog owns the keyboard: neither may be hijacked.
+      // Option+digit types a character on macOS, AltGr+digit does on many
+      // layouts, and an open menu or dialog owns the keyboard: none of them
+      // may be hijacked.
       if (isEditableShortcutTarget(event.target) || isPortalLayerShortcutTarget(event.target)) {
         return;
       }

@@ -52,35 +52,41 @@ function renderShortcuts() {
 }
 
 describe("workspaceSwitchIndex", () => {
-  it("reads the physical digit under Alt+Shift", () => {
-    expect(workspaceSwitchIndex(key("Digit1", { altKey: true, shiftKey: true }))).toBe(0);
+  it("reads the physical digit under Ctrl+Alt and Alt+Shift", () => {
+    expect(workspaceSwitchIndex(key("Digit1", { ctrlKey: true, altKey: true }))).toBe(0);
     expect(workspaceSwitchIndex(key("Digit9", { altKey: true, shiftKey: true }))).toBe(8);
+  });
+
+  it("accepts an Option key reported as AltGraph (Mac keyboard on Linux)", () => {
+    const altGr = (code: string, init: KeyboardEventInit) => {
+      const event = key(code, init);
+      Object.defineProperty(event, "getModifierState", { value: (k: string) => k === "AltGraph" });
+      return event;
+    };
+    expect(workspaceSwitchIndex(altGr("Digit2", { shiftKey: true }))).toBe(1);
+    expect(workspaceSwitchIndex(altGr("Digit2", { ctrlKey: true }))).toBe(1);
   });
 
   it("ignores the logical key, so AZERTY and shifted symbols still map", () => {
     // AZERTY top row: the "3" key reports `"` unshifted, `3` with Shift.
-    expect(
-      workspaceSwitchIndex(key("Digit3", { key: "3", altKey: true, shiftKey: true })),
-    ).toBe(2);
-    expect(
-      workspaceSwitchIndex(key("Digit3", { key: "#", altKey: true, shiftKey: true })),
-    ).toBe(2);
+    expect(workspaceSwitchIndex(key("Digit3", { key: "3", altKey: true, shiftKey: true }))).toBe(2);
+    expect(workspaceSwitchIndex(key("Digit3", { key: "#", ctrlKey: true, altKey: true }))).toBe(2);
   });
 
   it("rejects every other chord", () => {
     expect(workspaceSwitchIndex(key("Digit1", { altKey: true }))).toBeNull();
     expect(workspaceSwitchIndex(key("Digit1", { shiftKey: true }))).toBeNull();
-    expect(workspaceSwitchIndex(key("Digit1", { altKey: true, shiftKey: true, ctrlKey: true }))).toBeNull();
-    expect(workspaceSwitchIndex(key("Digit1", { altKey: true, shiftKey: true, metaKey: true }))).toBeNull();
-    expect(workspaceSwitchIndex(key("Digit0", { altKey: true, shiftKey: true }))).toBeNull();
-    expect(workspaceSwitchIndex(key("KeyA", { altKey: true, shiftKey: true }))).toBeNull();
+    expect(workspaceSwitchIndex(key("Digit1", { ctrlKey: true }))).toBeNull();
+    expect(workspaceSwitchIndex(key("Digit1", { ctrlKey: true, altKey: true, metaKey: true }))).toBeNull();
+    expect(workspaceSwitchIndex(key("Digit0", { ctrlKey: true, altKey: true }))).toBeNull();
+    expect(workspaceSwitchIndex(key("KeyA", { ctrlKey: true, altKey: true }))).toBeNull();
   });
 });
 
 describe("workspaceSwitchShortcut", () => {
   it("labels the first nine positions only", () => {
     expect(workspaceSwitchShortcut(0)?.key).toBe("1");
-    expect(workspaceSwitchShortcut(0)?.modifiers).toMatchObject({ alt: true, shift: true, primary: false });
+    expect(workspaceSwitchShortcut(0)?.modifiers).toMatchObject({ alt: true, shift: false, meta: false });
     expect(workspaceSwitchShortcut(8)?.key).toBe("9");
     expect(workspaceSwitchShortcut(9)).toBeNull();
   });
@@ -89,7 +95,7 @@ describe("workspaceSwitchShortcut", () => {
 describe("WorkspaceSwitchShortcuts", () => {
   it("opens the Nth workspace of the list", () => {
     const { adapter, unmount } = renderShortcuts();
-    const event = key("Digit2", { altKey: true, shiftKey: true });
+    const event = key("Digit2", { ctrlKey: true, altKey: true });
     document.dispatchEvent(event);
     expect(adapter.push).toHaveBeenCalledWith("/studio/issues");
     expect(event.defaultPrevented).toBe(true);
