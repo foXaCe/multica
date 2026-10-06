@@ -26,19 +26,22 @@ const EMPTY_WORKSPACES: { id: string; slug: string }[] = [];
  * Chrome and Firefox on Linux, where the page never receives the keydown.
  *
  * The match is deliberately tolerant on the modifiers: one of Alt / AltGraph
- * plus one of Ctrl / Shift. Keyboards disagree on what the Option key sends —
- * a Mac keyboard on Linux often reports it as AltGraph, not Alt — and a chord
- * that silently does nothing on one of them reads as broken. Meta (Cmd / Super)
- * is never part of it: desktops own Super+digit.
+ * plus one of Ctrl / Shift, or Ctrl+Meta. Keyboards disagree on what the
+ * Option key sends — a Mac keyboard on Linux may report AltGraph, and a
+ * dual-mode one in Windows mode sends Super — and a chord that silently does
+ * nothing on one of them reads as broken.
  *
  * Matched on the physical key (`event.code`) rather than `event.key`: with
  * Shift held the logical key is "!" on QWERTY, and on AZERTY the unshifted top
  * row is not digits at all, so only the key position means "the Nth".
  */
 export function workspaceSwitchIndex(event: KeyboardEvent): number | null {
-  if (event.metaKey) return null;
   const alt = event.altKey || event.getModifierState?.("AltGraph") === true;
-  if (!alt || !(event.ctrlKey || event.shiftKey)) return null;
+  // Ctrl+Meta counts as Ctrl+Alt: a dual-mode Mac keyboard in its Windows mode
+  // sends Super from the key printed "option". Meta alone, or with Shift, stays
+  // out — desktops own Super+digit and Super+Shift+digit.
+  const ctrlMeta = event.ctrlKey && event.metaKey && !alt;
+  if (!ctrlMeta && (event.metaKey || !alt || !(event.ctrlKey || event.shiftKey))) return null;
   const match = /^Digit([1-9])$/.exec(event.code);
   return match ? Number(match[1]) - 1 : null;
 }
