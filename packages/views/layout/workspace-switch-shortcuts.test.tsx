@@ -67,6 +67,10 @@ describe("workspaceSwitchIndex", () => {
     expect(workspaceSwitchIndex(altGr("Digit2", { ctrlKey: true }))).toBe(1);
   });
 
+  it("accepts Ctrl+Meta, the Option key of a Mac keyboard in Windows mode", () => {
+    expect(workspaceSwitchIndex(key("Digit2", { ctrlKey: true, metaKey: true }))).toBe(1);
+  });
+
   it("ignores the logical key, so AZERTY and shifted symbols still map", () => {
     // AZERTY top row: the "3" key reports `"` unshifted, `3` with Shift.
     expect(workspaceSwitchIndex(key("Digit3", { key: "3", altKey: true, shiftKey: true }))).toBe(2);
@@ -78,6 +82,8 @@ describe("workspaceSwitchIndex", () => {
     expect(workspaceSwitchIndex(key("Digit1", { shiftKey: true }))).toBeNull();
     expect(workspaceSwitchIndex(key("Digit1", { ctrlKey: true }))).toBeNull();
     expect(workspaceSwitchIndex(key("Digit1", { ctrlKey: true, altKey: true, metaKey: true }))).toBeNull();
+    expect(workspaceSwitchIndex(key("Digit1", { metaKey: true }))).toBeNull();
+    expect(workspaceSwitchIndex(key("Digit1", { metaKey: true, shiftKey: true }))).toBeNull();
     expect(workspaceSwitchIndex(key("Digit0", { ctrlKey: true, altKey: true }))).toBeNull();
     expect(workspaceSwitchIndex(key("KeyA", { ctrlKey: true, altKey: true }))).toBeNull();
   });
